@@ -2,7 +2,7 @@
   "name": "hard-edit",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hardedit.onrender.com",
+  "homepage": "https://hardedit.onrender.com/*",
   "proxy": "https://hard-edit.onrender.com",
   "dependencies": {
     "@monaco-editor/react": "^4.5.1",
