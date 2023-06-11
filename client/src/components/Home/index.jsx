@@ -68,9 +68,9 @@ function Files({ user, setUser }) {
 	const Line = ({ file, index }) => {
 		if (!file) return <br />;
 		return (
-			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
+			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] max-[600px]:w-[92vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded md:my-2 mx-auto justify-around relative">
 				<div
-					className="w-full capitalize cursor-pointer h-fit text-sm md:text-base max-[600px]:text-sm"
+					className="w-full capitalize cursor-pointer h-fit text-sm md:text-base max-[600px]:text-[10px]"
 					onClick={() => navigate(`/${file._id}`)}
 				>
 					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10 max-[600px]:text-[8px]">
@@ -81,7 +81,7 @@ function Files({ user, setUser }) {
 				<div className="opacity-60 m-auto cursor-default text-xs md:text-sm max-[600px]:hidden">
 					{file?.type?.label}
 				</div>
-				<div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[10px]">
+				<div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[8px]">
 					{file?.owner}
 				</div>
 				{file?.owner === user.email && (
@@ -92,7 +92,7 @@ function Files({ user, setUser }) {
 								deleteFile(file?._id, file?.fileName)
 							}
 							alt={`delete`}
-							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80 max-[600px]:w-3 max-[600px]:h-3"
+							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80 max-[600px]:w-4 max-[600px]:h-4"
 						/>
 					</div>
 				)}
@@ -109,7 +109,7 @@ function Files({ user, setUser }) {
 				user={user}
 				setUser={setUser}
 			/>
-			<div className="grid p-2 md:p-4 h-[calc(100vh-64px)]">
+			<div className="grid py-[1vh] px-[2vw] md:p-4 h-[calc(100vh-64px)]">
 				<div className="block p-1 h-full border-2 rounded overflow-hidden md:p-4">
 					<form
 						onSubmit={(e) => {
@@ -117,7 +117,7 @@ function Files({ user, setUser }) {
 							createFile();
 						}}
 						className={
-							'grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] h-max px-4 py-2 bg-slate-200 rounded mb-6 mx-auto justify-around ' +
+							'grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] max-[600px]:grid-cols-[11fr_4fr_4fr]  w-[94vw] h-max p-1 sm:px-4 sm:py-2 bg-slate-200 rounded mb-4 mx-auto justify-around ' +
 							(creating ? 'cursor-not-allowed' : '')
 						}
 					>
