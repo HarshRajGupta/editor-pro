@@ -7,48 +7,38 @@ function File({ user, setUser }) {
 	const [file, setFile] = useState(null);
 	const [code, setCode] = useState();
 	const [lastChanged, setLastChanged] = useState(0);
-	useEffect(() => {
-		if (!socket) return;
-		return () => {
-			const docId = window.location.pathname.split('/')[1];
-			if (docId && docId !== '') {
-				socket.on('response', (data) => {
-					console.log('response', data);
-					if (data.success) {
-						setFile(data.document);
-						setCode(data.document.data);
-					} else {
-						console.error(data.message);
-						toast.error(data.message);
-					}
-				});
-				socket.on('receive', (data) => {
-					if (data.source !== user.email) {
-						setLastChanged(0);
-						console.log('receive-changes', data);
-						setCode(data.data);
-					}
-				});
-				socket.on('user-joined', (user) => {
-					toast.success(`${user} joined...!`);
-				});
-				socket.on('user-left', (user) => {
-					toast.info(`${user} left...!`);
-				});
-				socket.on('disconnect', () => {
-					toast.error(`Connection Lost...!`);
-				});
-			} else {
-				socket.disconnect();
-			}
-		};
-	}, [user]);
 
 	useEffect(() => {
 		const docId = window.location.pathname.split('/')[1];
 		socket.emit('request', {
 			docId: docId,
 			userEmail: user.email,
+		});
+		socket.on('response', (data) => {
+			console.log('response', data);
+			if (data.success) {
+				setFile(data.document);
+				setCode(data.document.data);
+			} else {
+				console.error(data.message);
+				toast.error(data.message);
+			}
+		});
+		socket.on('receive', (data) => {
+			if (data.source !== user.email) {
+				setLastChanged(0);
+				console.log('receive-changes', data);
+				setCode(data.data);
+			}
+		});
+		socket.on('user-joined', (user) => {
+			toast.success(`${user} joined...!`);
+		});
+		socket.on('user-left', (user) => {
+			toast.info(`${user} left...!`);
+		});
+		socket.on('disconnect', () => {
+			toast.error(`Connection Lost...!`);
 		});
 	}, []);
 
