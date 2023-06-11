@@ -79,10 +79,10 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	};
 	return (
 		<>
-			<div className="flex h-[calc(100vh-64px)]">
-				<div className="bg-[#1f1e1f] text-white w-[70vw]">
+			<div className="sm:flex h-[calc(100vh-62px)]">
+				<div className="bg-[#1f1e1f] text-white w-full sm:w-[70vw] pt-4 h-full max-[600px]:max-h-[70vh]">
 					<Editor
-						height="calc(100vh - 64px)"
+						height="calc(100vh - 80px)"
 						width={`100%`}
 						language={language?.value || 'javascript'}
 						theme={'vs-dark'}
@@ -91,11 +91,11 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 							setLastChanged(1);
 							setCode(e);
 						}}
-						className="w-full max-w-[70vw]"
+						className="w-full sm:max-w-[70vw] max-[600px]:max-h-[70vh]"
 						value={code}
 					/>
 				</div>
-				<div className="px-8 w-[30vw] overflow-y-auto">
+				<div className="px-8 w-[30vw] overflow-y-auto max-[600px]:w-full">
 					<Select
 						options={Languages}
 						isSearchable={true}
@@ -139,9 +139,9 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 						</div>
 						<button
 							className={
-								'mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-2 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm ' +
+								'mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-2 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm max-[600px]:mb-4 ' +
 								(!code || submitting
-									? 'opacity-50 cursor-wait'
+									? ' opacity-50 cursor-wait'
 									: '')
 							}
 							disabled={!code || submitting}

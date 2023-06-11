@@ -68,7 +68,7 @@ function Files({ user, setUser }) {
 	const Line = ({ file, index }) => {
 		if (!file) return <br />;
 		return (
-			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-full max-w-[calc(100vw-6rem)] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
+			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
 				<div
 					className="w-full capitalize cursor-pointer h-max text-sm md:text-base"
 					onClick={() => navigate(`/${file._id}`)}
@@ -78,10 +78,10 @@ function Files({ user, setUser }) {
 					</span>
 					<span className="">{file?.fileName}</span>
 				</div>
-				<div className="opacity-60 m-auto cursor-default text-xs md:text-sm">
+				<div className="opacity-60 m-auto cursor-default text-xs md:text-sm max-[600px]:hidden">
 					{file?.type?.label}
 				</div>
-				<div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm">
+				<div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[10px]">
 					{file?.owner}
 				</div>
 				{file?.owner === user.email && (
@@ -117,13 +117,13 @@ function Files({ user, setUser }) {
 							createFile();
 						}}
 						className={
-							'grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-full max-w-[calc(100vw-6rem)] h-max px-4 py-2 bg-slate-200 rounded mb-6 mx-auto justify-around ' +
+							'grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] h-max px-4 py-2 bg-slate-200 rounded mb-6 mx-auto justify-around ' +
 							(creating ? 'cursor-not-allowed' : '')
 						}
 					>
 						<input
 							className={
-								'py-2 px-4 w-full text-sm md:text-base rounded m-auto ' +
+								'py-2 px-4 w-full text-sm md:text-base rounded m-auto max-[600px]:text-[10px] max-[600px]:py-1 ' +
 								(creating ? 'cursor-not-allowed' : '')
 							}
 							type="text"
@@ -136,7 +136,7 @@ function Files({ user, setUser }) {
 							options={Languages}
 							defaultValue={Languages[0]}
 							isSearchable={true}
-							className={'w-fit m-auto text-xs md:text-sm'}
+							className={'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75'}
 							onChange={(e) => {
 								setFileType(e);
 							}}
@@ -147,17 +147,17 @@ function Files({ user, setUser }) {
 							disabled={creating}
 							type={'submit'}
 							className={
-								'h-9 bg-slate-500 hover:bg-slate-600 text-white rounded px-2 py-1 m-auto text-xs md:text-sm ' +
+								'bg-slate-500 hover:bg-slate-600 text-white rounded px-2 py-2 m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:py-1 h-fit ' +
 								(creating
 									? 'opacity-50 cursor-not-allowed'
 									: '')
 							}
 						>
-							+ New File
+							New File
 						</button>
 					</form>
 					{files.length === 0 ? (
-						<div>No files found</div>
+						<div className='italic font-["Comic_Sans_MS"]'>No files found</div>
 					) : (
 						<div className="grid max-h-full overflow-y-auto">
 							{files.map((file, index) => (

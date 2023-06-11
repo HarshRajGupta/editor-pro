@@ -110,7 +110,7 @@ function Header({ user, setUser, fileName }) {
 		<>
 			<Moodle />
 			<nav className={`border-gray-200 bg-${bg2} z-10`}>
-				<div className="flex  justify-between items-center mx-auto w-screen py-4 px-20">
+				<div className="flex  justify-between items-center mx-auto w-screen py-[2vh] px-[4vw]">
 					<div className="flex items-center">
 						<img
 							src={Logo}
@@ -118,7 +118,7 @@ function Header({ user, setUser, fileName }) {
 							alt="Flowbite Logo"
 						/>
 						<span
-							className={`self-center text-xl font-semibold whitespace-nowrap text-${bg1}`}
+							className={`font-["Comic_Sans_MS"] self-center text-xl font-semibold whitespace-nowrap text-${bg1}`}
 						>
 							{fileName || user?.userName}
 						</span>
