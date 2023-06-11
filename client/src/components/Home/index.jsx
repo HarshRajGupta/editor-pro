@@ -73,7 +73,7 @@ function Files({ user, setUser }) {
 					className="w-full capitalize cursor-pointer h-fit text-sm md:text-base max-[600px]:text-sm"
 					onClick={() => navigate(`/${file._id}`)}
 				>
-					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10">
+					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10 max-[600px]:text-[8px]">
 						{index + 1}.
 					</span>
 					<span className="">{file?.fileName}</span>
@@ -92,7 +92,7 @@ function Files({ user, setUser }) {
 								deleteFile(file?._id, file?.fileName)
 							}
 							alt={`delete`}
-							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80"
+							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80 max-[600px]:w-3 max-[600px]:h-3"
 						/>
 					</div>
 				)}
@@ -136,7 +136,9 @@ function Files({ user, setUser }) {
 							options={Languages}
 							defaultValue={Languages[0]}
 							isSearchable={true}
-							className={'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75 z-10'}
+							className={
+								'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75 z-10'
+							}
 							onChange={(e) => {
 								setFileType(e);
 							}}
@@ -157,7 +159,9 @@ function Files({ user, setUser }) {
 						</button>
 					</form>
 					{files.length === 0 ? (
-						<div className='italic font-["Comic_Sans_MS"]'>No files found</div>
+						<div className='italic font-["Comic_Sans_MS"]'>
+							No files found
+						</div>
 					) : (
 						<div className="grid max-h-full overflow-y-auto">
 							{files.map((file, index) => (
