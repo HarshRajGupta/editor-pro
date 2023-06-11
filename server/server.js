@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const url = process.env.URL || "*";
+const url = process.env.CLIENT_URL || "*";
 app.use(
     cors({
         credentials: true,

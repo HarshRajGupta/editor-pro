@@ -14,7 +14,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		setLanguage(value);
 		try {
 			const res = await axios.post(
-				'http://localhost:4000/api/document/type',
+				'/api/document/type',
 				{
 					id: window.location.pathname.split('/')[1],
 					type: value,

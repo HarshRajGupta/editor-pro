@@ -17,7 +17,7 @@ function Files({ user }) {
 	const deleteFile = async (id, fileName) => {
 		try {
 			const res = await axios.post(
-				'http://localhost:4000/api/document/delete',
+				'/api/document/delete',
 				{
 					userEmail: user.email,
 					id: id,
@@ -35,7 +35,7 @@ function Files({ user }) {
 	const getFiles = async () => {
 		try {
 			console.log(user);
-			const res = await axios.post('http://localhost:4000/api/document', {
+			const res = await axios.post('/api/document', {
 				userEmail: user.email,
 			});
 			setFiles(res.data.documents);
@@ -54,7 +54,7 @@ function Files({ user }) {
 		try {
 			console.log(DefaultCode[fileType.value]);
 			const res = await axios.post(
-				'http://localhost:4000/api/document/create',
+				'/api/document/create',
 				{
 					userEmail: user.email,
 					type: fileType,

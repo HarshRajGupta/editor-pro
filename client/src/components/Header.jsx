@@ -14,7 +14,7 @@ function Header({ user, setUser, fileName }) {
 	const invite = async () => {
 		try {
 			const res = await axios.post(
-				'http://localhost:4000/api/document/invite',
+				'/api/document/invite',
 				{
 					id: docId,
 					userEmail: user?.email,

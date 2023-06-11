@@ -21,7 +21,7 @@ function Auth({ setUser }) {
 		}
 		try {
 			await axios
-				.post(`http://localhost:4000/api/auth/${page}`, user)
+				.post(`/api/auth/${page}`, user)
 				.then((res) => {
 					localStorage.setItem('token', res.data.token);
 					toast.success(res.data.message);

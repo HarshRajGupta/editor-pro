@@ -10,6 +10,9 @@ function Loading() {
 	return <h1>Loading...</h1>;
 }
 
+axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
+axios.defaults.withCredentials = true;
+
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
@@ -18,7 +21,7 @@ function App() {
 		const token = localStorage.getItem('token');
 		if (token && !user) {
 			axios
-				.post('http://localhost:4000/api/auth', {
+				.post('/api/auth', {
 					token: token,
 				})
 				.then((res) => {
