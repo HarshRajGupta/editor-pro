@@ -70,7 +70,7 @@ function Files({ user, setUser }) {
 		return (
 			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
 				<div
-					className="w-full capitalize cursor-pointer h-max text-sm md:text-base"
+					className="w-full capitalize cursor-pointer h-fit text-sm md:text-base max-[600px]:text-sm"
 					onClick={() => navigate(`/${file._id}`)}
 				>
 					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10">
@@ -136,7 +136,7 @@ function Files({ user, setUser }) {
 							options={Languages}
 							defaultValue={Languages[0]}
 							isSearchable={true}
-							className={'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75'}
+							className={'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75 z-10'}
 							onChange={(e) => {
 								setFileType(e);
 							}}
