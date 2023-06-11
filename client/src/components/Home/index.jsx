@@ -106,7 +106,9 @@ function Files({ user, setUser }) {
 	};
 
 	useEffect(() => {
-		return getFiles;
+		return () => {
+			getFiles();
+		};
 	}, []);
 	return (
 		<>
