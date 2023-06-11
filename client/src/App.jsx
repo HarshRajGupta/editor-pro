@@ -44,9 +44,7 @@ function App() {
 		}
 	};
 	useEffect(() => {
-		return () => {
-			checkLogin();
-		};
+		checkLogin();
 	}, []);
 	return (
 		<>
