@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { Code, Header } from '../';
 import socket from './socket';
 
@@ -8,11 +7,10 @@ function File({ user, setUser }) {
 	const [file, setFile] = useState(null);
 	const [code, setCode] = useState();
 	const [lastChanged, setLastChanged] = useState(0);
-	const navigate = useNavigate();
-	const docId = window.location.pathname.split('/')[1];
 	useEffect(() => {
 		if (!socket) return;
 		return () => {
+			const docId = window.location.pathname.split('/')[1];
 			if (docId && docId !== '') {
 				socket.emit('request', {
 					docId: docId,
@@ -26,7 +24,6 @@ function File({ user, setUser }) {
 					} else {
 						console.error(data.message);
 						toast.error(data.message);
-						navigate('/');
 					}
 				});
 				socket.on('receive', (data) => {
@@ -49,7 +46,7 @@ function File({ user, setUser }) {
 				socket.disconnect();
 			}
 		};
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		if (lastChanged) {
@@ -58,7 +55,7 @@ function File({ user, setUser }) {
 				source: user.email,
 			});
 		}
-	}, [lastChanged, code, socket]);
+	}, [lastChanged, code, user]);
 
 	if (!file) return <h1>Loading...</h1>;
 	return (
