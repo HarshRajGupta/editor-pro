@@ -26,7 +26,6 @@ function Auth({ setUser }) {
 					localStorage.setItem('token', res.data.token);
 					toast.success(res.data.message);
 					setUser(res.data?.user);
-					console.log(res);
 				})
 				.catch((err) => {
 					if (!err.response) {
@@ -67,7 +66,6 @@ function Auth({ setUser }) {
 										setNamePlaceholder(
 											e.target.value ? false : true,
 										);
-										console.log(nameRef.current?.value);
 									}}
 									required
 								/>
@@ -92,7 +90,6 @@ function Auth({ setUser }) {
 									setEmailPlaceholder(
 										e.target.value ? false : true,
 									);
-									console.log(emailRef.current?.value);
 								}}
 								required
 							/>
@@ -119,7 +116,6 @@ function Auth({ setUser }) {
 									setPasswordPlaceholder(
 										e.target.value ? false : true,
 									);
-									console.log(passwordRef.current?.value);
 								}}
 								required
 							/>

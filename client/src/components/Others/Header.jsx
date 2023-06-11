@@ -13,12 +13,11 @@ function Header({ user, setUser, fileName }) {
 	const docId = window.location.pathname.split('/')[1];
 	const invite = async () => {
 		try {
-			const res = await axios.post('/api/document/invite', {
+			await axios.post('/api/document/invite', {
 				id: docId,
 				userEmail: user?.email,
 				newEmail: inviteMail?.current?.value,
 			});
-			console.log(res);
 			toast.success('Invitation sent successfully');
 			setShowModal(false);
 		} catch (err) {

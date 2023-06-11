@@ -13,11 +13,10 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	const handleLanguageChange = async (value) => {
 		setLanguage(value);
 		try {
-			const res = await axios.post('/api/document/type', {
+			await axios.post('/api/document/type', {
 				id: window.location.pathname.split('/')[1],
 				type: value,
 			});
-			console.log(res);
 		} catch (err) {
 			console.error(err);
 		}
@@ -34,7 +33,6 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		};
 		try {
 			const response = await axios.request(options);
-			console.log(response.data);
 			let stdOut = null;
 			if (response.data?.stdout) stdOut = atob(response.data?.stdout);
 			let stdErr = null;
@@ -48,12 +46,11 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 			setSubmitting(false);
 		} catch (err) {
 			setSubmitting(false);
-			console.log('catch block...', err);
+			console.error('Token Decode Failed', err);
 		}
 	};
 	const handleSubmit = async () => {
 		setSubmitting(true);
-		console.log(inputRef.current.value);
 		const formData = {
 			language_id: language.id,
 			source_code: btoa(code),
@@ -77,7 +74,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 			setSubmitting(false);
 		} catch (err) {
 			setSubmitting(false);
-			console.log('catch block...', err);
+			console.error('Compile Failed', err);
 		}
 	};
 	return (

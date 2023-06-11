@@ -11,8 +11,6 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 	const checkLogin = async () => {
-		console.log(`loading on`);
-		console.log(process.env);
 		const token = localStorage.getItem('token');
 		if (token) {
 			axios
@@ -26,21 +24,18 @@ function App() {
 						id: res.data.id,
 					});
 					toast.success(res.data.message);
-					console.log(res);
 					setLoading(false);
 				})
 				.catch((err) => {
-					console.log(err);
+					console.error(err);
 					localStorage.removeItem('token');
 					toast.error(err.response?.data?.message);
 					toast.error('Please login again');
 					setLoading(false);
 				});
 		} else {
-			console.log(`loading off`);
 			setLoading(false);
 			toast.warning('Please Login');
-			console.log('No token found');
 		}
 	};
 	useEffect(() => {

@@ -15,11 +15,10 @@ function Files({ user, setUser }) {
 
 	const deleteFile = async (id, fileName) => {
 		try {
-			const res = await axios.post('/api/document/delete', {
+			await axios.post('/api/document/delete', {
 				userEmail: user.email,
 				id: id,
 			});
-			console.log(res);
 			await getFiles();
 			toast.success(`${fileName} deleted successfully`);
 		} catch (err) {
@@ -30,13 +29,10 @@ function Files({ user, setUser }) {
 
 	const getFiles = async () => {
 		try {
-			console.log(user);
 			const res = await axios.post('/api/document', {
 				userEmail: user.email,
 			});
 			setFiles(res.data.documents);
-			console.log(res);
-			console.log(files);
 		} catch (err) {
 			console.error(err);
 		}
@@ -57,7 +53,6 @@ function Files({ user, setUser }) {
 				fileName: fileRef.current.value,
 				defaultCode: DefaultValue,
 			});
-			console.log(res);
 			await getFiles();
 			toast.success(res.data?.message);
 			fileRef.current.value = '';

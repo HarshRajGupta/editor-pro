@@ -15,7 +15,6 @@ function File({ user, setUser }) {
 			userEmail: user.email,
 		});
 		socket.on('response', (data) => {
-			console.log('response', data);
 			if (data.success) {
 				setFile(data.document);
 				setCode(data.document.data);
@@ -27,7 +26,6 @@ function File({ user, setUser }) {
 		socket.on('receive', (data) => {
 			if (data.source !== user.email) {
 				setLastChanged(0);
-				console.log('receive-changes', data);
 				setCode(data.data);
 			}
 		});
