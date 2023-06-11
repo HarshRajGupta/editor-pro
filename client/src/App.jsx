@@ -3,23 +3,18 @@ import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Auth, Files, File } from './container';
-import { Header } from './components';
+import { Auth, Header, Home, Document } from './components';
 
-function Loading() {
-	return <h1>Loading...</h1>;
-}
-
-axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
-	const [fileName, setFileName] = useState(null);
 	const checkLogin = async () => {
+		console.log(`loading on`);
+		console.log(process.env);
 		const token = localStorage.getItem('token');
-		if (token && !user) {
+		if (token) {
 			axios
 				.post('/api/auth', {
 					token: token,
@@ -42,6 +37,7 @@ function App() {
 					setLoading(false);
 				});
 		} else {
+			console.log(`loading off`);
 			setLoading(false);
 			toast.warning('Please Login');
 			console.log('No token found');
@@ -53,36 +49,38 @@ function App() {
 	return (
 		<>
 			{loading ? (
-				<Loading />
+				<h1>Loading...</h1>
 			) : (
 				<>
 					{!user ? (
 						<Auth setUser={setUser} />
 					) : (
-						<>
-							<Header
-								user={user}
-								setUser={setUser}
-								fileName={fileName}
-							/>
-							<BrowserRouter>
-								<Routes>
-									<Route
-										path="/"
-										element={<Files user={user} />}
-									/>
-									<Route
-										path="/:id"
-										element={
-											<File
+						<BrowserRouter>
+							<Routes>
+								<Route
+									path="/"
+									element={
+										<>
+											<Home
 												user={user}
-												setFileName={setFileName}
+												setUser={setUser}
 											/>
-										}
-									/>
-								</Routes>
-							</BrowserRouter>
-						</>
+										</>
+									}
+								/>
+								<Route
+									path="/:id"
+									element={
+										<>
+											<Document
+												user={user}
+												setUser={setUser}
+											/>
+										</>
+									}
+								/>
+							</Routes>
+						</BrowserRouter>
 					)}
 				</>
 			)}

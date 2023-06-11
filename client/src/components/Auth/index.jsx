@@ -61,6 +61,7 @@ function Auth({ setUser }) {
 									className="input100"
 									type="text"
 									name="userName"
+									autocomplete={`off`}
 									ref={nameRef}
 									onChange={(e) => {
 										setNamePlaceholder(
@@ -82,9 +83,10 @@ function Auth({ setUser }) {
 						)}
 						<div className="wrap-input100">
 							<input
-								className="input100"
+								className="input100 lowercase"
 								type="email"
 								name="email"
+								autoComplete={`off`}
 								ref={emailRef}
 								onChange={(e) => {
 									setEmailPlaceholder(
@@ -111,6 +113,7 @@ function Auth({ setUser }) {
 								className="input100"
 								type="password"
 								name="pass"
+								autoComplete={`off`}
 								ref={passwordRef}
 								onChange={(e) => {
 									setPasswordPlaceholder(

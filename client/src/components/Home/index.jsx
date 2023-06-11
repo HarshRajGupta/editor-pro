@@ -3,11 +3,10 @@ import axios from 'axios';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Languages } from '../../assets/constants/LanguageOptions';
-import { DefaultCode } from '../../assets/constants/DefaultCode';
-import deleteIcon from '../../assets/images/delete.png';
+import { Languages, DefaultCode, DeleteIcon } from '../../assets';
+import { Header } from '../';
 
-function Files({ user }) {
+function Files({ user, setUser }) {
 	const navigate = useNavigate();
 	const [files, setFiles] = useState([]);
 	const [fileType, setFileType] = useState(Languages[0]);
@@ -16,13 +15,10 @@ function Files({ user }) {
 
 	const deleteFile = async (id, fileName) => {
 		try {
-			const res = await axios.post(
-				'/api/document/delete',
-				{
-					userEmail: user.email,
-					id: id,
-				},
-			);
+			const res = await axios.post('/api/document/delete', {
+				userEmail: user.email,
+				id: id,
+			});
 			console.log(res);
 			await getFiles();
 			toast.success(`${fileName} deleted successfully`);
@@ -52,16 +48,15 @@ function Files({ user }) {
 		setCreating(true);
 		toast.info('Creating file...');
 		try {
-			console.log(DefaultCode[fileType.value]);
-			const res = await axios.post(
-				'/api/document/create',
-				{
-					userEmail: user.email,
-					type: fileType,
-					fileName: fileRef.current.value,
-					defaultCode: DefaultCode[fileType.value],
-				},
-			);
+			const DefaultValue = DefaultCode.find(
+				(x) => x.id === fileType.id,
+			)?.code;
+			const res = await axios.post('/api/document/create', {
+				userEmail: user.email,
+				type: fileType,
+				fileName: fileRef.current.value,
+				defaultCode: DefaultValue,
+			});
 			console.log(res);
 			await getFiles();
 			toast.success(res.data?.message);
@@ -97,10 +92,11 @@ function Files({ user }) {
 				{file?.owner === user.email && (
 					<div className="absolute right-5">
 						<img
-							src={deleteIcon}
+							src={DeleteIcon}
 							onClick={() =>
 								deleteFile(file?._id, file?.fileName)
 							}
+							alt={`delete`}
 							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80"
 						/>
 					</div>
@@ -114,10 +110,17 @@ function Files({ user }) {
 	}, []);
 	return (
 		<>
+			<Header
+				user={user}
+				setUser={setUser}
+			/>
 			<div className="grid p-2 md:p-4 h-[calc(100vh-64px)]">
 				<div className="block p-1 h-full border-2 rounded overflow-hidden md:p-4">
 					<form
-						onSubmit={(e) => (e.preventDefault(), createFile())}
+						onSubmit={(e) => {
+							e.preventDefault();
+							createFile();
+						}}
 						className={
 							'grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-full max-w-[calc(100vw-6rem)] h-max px-4 py-2 bg-slate-200 rounded mb-6 mx-auto justify-around ' +
 							(creating ? 'cursor-not-allowed' : '')

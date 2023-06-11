@@ -1,9 +1,9 @@
-const User = require("../models/user");
 const Document = require("../models/document");
 
 const getDocument = async (data) => {
     try {
-        const { userEmail, docId } = data;
+        const { docId } = data;
+        const userEmail = data.userEmail.toLowerCase();
         const Doc = await Document.findById(docId);
         if (!Doc) return { success: false, message: 'Document does not exist' }
         const permit = Doc.users.find(email => email === userEmail);

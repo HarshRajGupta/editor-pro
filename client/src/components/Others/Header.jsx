@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useRef } from 'react';
-import logo from '../assets/images/code.png';
+import { Logo } from '../../assets';
 import { toast } from 'react-toastify';
 
 function Header({ user, setUser, fileName }) {
@@ -13,14 +13,11 @@ function Header({ user, setUser, fileName }) {
 	const docId = window.location.pathname.split('/')[1];
 	const invite = async () => {
 		try {
-			const res = await axios.post(
-				'/api/document/invite',
-				{
-					id: docId,
-					userEmail: user?.email,
-					newEmail: inviteMail?.current?.value,
-				},
-			);
+			const res = await axios.post('/api/document/invite', {
+				id: docId,
+				userEmail: user?.email,
+				newEmail: inviteMail?.current?.value,
+			});
 			console.log(res);
 			toast.success('Invitation sent successfully');
 			setShowModal(false);
@@ -60,7 +57,7 @@ function Header({ user, setUser, fileName }) {
 								</button>
 								<div className="px-6 py-6 lg:px-8">
 									<h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-										Add a collaborator to {fileName}
+										Invite a collaborator to {fileName}
 									</h3>
 									<form
 										className="space-y-6"
@@ -72,14 +69,14 @@ function Header({ user, setUser, fileName }) {
 									>
 										<div>
 											<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-												User Email
+												Collaborator`s Email
 											</label>
 											<input
 												type="email"
 												name="email"
 												ref={inviteMail}
-												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-												placeholder="name@company.com"
+												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white lowercase"
+												placeholder="emailId@domain"
 												required
 											/>
 										</div>
@@ -117,7 +114,7 @@ function Header({ user, setUser, fileName }) {
 				<div className="flex  justify-between items-center mx-auto w-screen py-4 px-20">
 					<div className="flex items-center">
 						<img
-							src={logo}
+							src={Logo}
 							className="h-8 mr-3"
 							alt="Flowbite Logo"
 						/>

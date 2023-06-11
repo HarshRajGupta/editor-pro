@@ -40,7 +40,8 @@ io.on("connection", socket => {
         console.log(`IO: request ${data.docId}`)
         try {
             if (!data.docId) {
-                return console.log(`IO: Document ID not provided`)
+                console.log(`IO: Document ID not provided`)
+                return socket.disconnect();
             }
             const document = await Document.findById(data.docId);
             if (!document) {
@@ -111,7 +112,7 @@ const saveStack = async () => {
 }
 
 const port = process.env.PORT || 4000;
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
     try {
         console.log("GET /");
         return res.send(`<h1>Server listening on <a href='${url}'>http://localhost:${port}</a></h1>`);

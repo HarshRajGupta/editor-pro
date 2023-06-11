@@ -8,7 +8,9 @@ const registerUser = async (req, res) => {
     console.log('POST /api/auth/register')
     try {
         console.log(req.body);
-        const { userName, email, password } = req.body;
+        const { userName, password } = req.body;
+        const email = req.body.email.toLowerCase();
+        if (!userName || !email || !password) return res.status(400).json({ success: false, message: 'Bad Request' })
         const user = await User.create({
             userName,
             email,
@@ -47,7 +49,8 @@ const loginUser = async (req, res) => {
     console.log('POST /api/auth/login');
     try {
         console.log(req.body);
-        const { email, password } = req.body;
+        const { password } = req.body;
+        const email = req.body.email.toLowerCase();
         const user = await User.findOne({ email });
         if (user) {
             const passOk = bcrypt.compareSync(password, user.password);

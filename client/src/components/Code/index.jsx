@@ -3,7 +3,7 @@ import Editor from '@monaco-editor/react';
 import Select from 'react-select';
 import Terminal from './Terminal';
 import axios from 'axios';
-import { Languages } from '../../assets/constants/LanguageOptions';
+import { Languages } from '../../assets';
 
 function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	const inputRef = useRef(null);
@@ -13,13 +13,10 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	const handleLanguageChange = async (value) => {
 		setLanguage(value);
 		try {
-			const res = await axios.post(
-				'/api/document/type',
-				{
-					id: window.location.pathname.split('/')[1],
-					type: value,
-				},
-			);
+			const res = await axios.post('/api/document/type', {
+				id: window.location.pathname.split('/')[1],
+				type: value,
+			});
 			console.log(res);
 		} catch (err) {
 			console.error(err);
@@ -28,11 +25,11 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	const deCodeToken = async (token) => {
 		const options = {
 			method: 'GET',
-			url: import.meta.env.VITE_APP_RAPID_API_URL + '/' + token,
+			url: process.env.REACT_APP_RAPID_API_URL + '/' + token,
 			params: { base64_encoded: 'true', fields: '*' },
 			headers: {
-				'X-RapidAPI-Host': import.meta.env.VITE_APP_RAPID_API_HOST,
-				'X-RapidAPI-Key': import.meta.env.VITE_APP_RAPID_API_KEY,
+				'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST,
+				'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 			},
 		};
 		try {
@@ -64,13 +61,13 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		};
 		const options = {
 			method: 'POST',
-			url: import.meta.env.VITE_APP_RAPID_API_URL,
+			url: process.env.REACT_APP_RAPID_API_URL,
 			params: { base64_encoded: 'true', fields: '*' },
 			headers: {
 				'content-type': 'application/json',
 				'Content-Type': 'application/json',
-				'X-RapidAPI-Host': import.meta.env.VITE_APP_RAPID_API_HOST,
-				'X-RapidAPI-Key': import.meta.env.VITE_APP_RAPID_API_KEY,
+				'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST,
+				'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 			},
 			data: formData,
 		};

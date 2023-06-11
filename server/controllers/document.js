@@ -5,13 +5,15 @@ const createDocument = async (req, res) => {
     console.log(`POST /api/document/create`)
     try {
         console.log(req.body)
-        const { userEmail, type, fileName } = req.body;
+        const { type, fileName, defaultCode } = req.body;
+        const userEmail = req.body.userEmail.toLowerCase();
         if (!userEmail || !type) return res.status(400).json({ success: false, message: 'Bad Request' })
         const newDocument = await Document.create({
             users: [userEmail],
             type: type,
             owner: userEmail,
-            fileName: fileName
+            fileName: fileName,
+            data: defaultCode
         })
         console.log(`DEBUG: Document ${newDocument._id} created`);
         return res.status(200).json({ success: true, message: 'Document created', document: newDocument })
@@ -26,7 +28,7 @@ const getDocuments = async (req, res) => {
     console.log(`POST /api/document/`)
     try {
         console.log(req.body)
-        const { userEmail } = req.body;
+        const userEmail = req.body.userEmail.toLowerCase();
         if (!userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const documents = await Document.find({ users: userEmail })
         console.log(`DEBUG: Documents of ${userEmail} sent`)
@@ -41,7 +43,8 @@ const getDocuments = async (req, res) => {
 const getDocumentById = async (req, res) => {
     console.log(`POST /api/document/get`)
     try {
-        const { id, userEmail } = req.body;
+        const { id } = req.body;
+        const userEmail = req.body.userEmail.toLowerCase();
         if (!id || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const document = await Document.findById(id);
         if (!document) return res.status(400).json({ success: false, message: 'Document does not exist' })
@@ -81,7 +84,8 @@ const deleteDocument = async (req, res) => {
     console.log("POST /api/document/delete");
     try {
         console.log(req.body)
-        const { id, userEmail } = req.body;
+        const { id } = req.body;
+        const userEmail = req.body.userEmail.toLowerCase();
         if (!id || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const doc = await Document.findById(id)
         if (!doc) return res.status(400).json({ success: false, message: 'Document does not exist' })

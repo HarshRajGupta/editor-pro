@@ -9,8 +9,8 @@ const mailTransporter = nodemailer.createTransport({
 });
 
 const registrationMail = (email, name) => {
-    const subject = "Welcome to Collab"
-    const text = `${name} welcome to collab`
+    const subject = "Welcome to hardEdit"
+    const text = `Welcome ${name} to hardEdit\nYou have successfully registered to hardEdit.\nYou can now create and edit documents.\n\nRegards,\nhardEdit Team`
     const mailDetails = {
         from: process.env.MAIL,
         to: email,
