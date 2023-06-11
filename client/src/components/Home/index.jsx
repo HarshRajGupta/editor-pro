@@ -109,7 +109,7 @@ function Files({ user, setUser }) {
 				user={user}
 				setUser={setUser}
 			/>
-			<div className="grid py-[1vh] px-[2vw] md:p-4 h-[calc(100vh-64px)]">
+			<main className="grid py-[1vh] px-[2vw] md:p-4 h-[calc(100vh-64px)]">
 				<div className="block p-1 h-full border-2 rounded overflow-hidden md:p-4">
 					<form
 						onSubmit={(e) => {
@@ -174,7 +174,7 @@ function Files({ user, setUser }) {
 						</div>
 					)}
 				</div>
-			</div>
+			</main>
 		</>
 	);
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Code, Header } from '../';
+import { Code, Header, Loader } from '../';
 import socket from './socket';
 
 function File({ user, setUser }) {
@@ -49,7 +49,7 @@ function File({ user, setUser }) {
 		}
 	}, [lastChanged, code, user]);
 
-	if (!file) return <h1>Loading...</h1>;
+	if (!file) return <Loader />;
 	return (
 		<>
 			<Header
@@ -65,7 +65,7 @@ function File({ user, setUser }) {
 					setLastChanged={setLastChanged}
 				/>
 			) : (
-				<h1>Loading...</h1>
+				<Loader />
 			)}
 		</>
 	);

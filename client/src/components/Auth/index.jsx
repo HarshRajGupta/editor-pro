@@ -40,7 +40,7 @@ function Auth({ setUser }) {
 		}
 	};
 	return (
-		<div className="limiter">
+		<main className="limiter">
 			<div className="container-login100">
 				<div className="wrap-login100">
 					<form
@@ -171,7 +171,7 @@ function Auth({ setUser }) {
 					</form>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }
 

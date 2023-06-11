@@ -78,85 +78,81 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		}
 	};
 	return (
-		<>
-			<div className="sm:flex h-[calc(100vh-62px)]">
-				<div className="bg-[#1f1e1f] text-white w-full sm:w-[70vw] pt-4 h-full max-[600px]:max-h-[70vh]">
-					<Editor
-						height="calc(100vh - 80px)"
-						width={`100%`}
-						language={language?.value || 'javascript'}
-						theme={'vs-dark'}
-						defaultValue={code}
-						onChange={(e) => {
-							setLastChanged(1);
-							setCode(e);
-						}}
-						className="w-full sm:max-w-[70vw] max-[600px]:max-h-[70vh]"
-						value={code}
-					/>
-				</div>
-				<div className="px-8 w-[30vw] overflow-y-auto max-[600px]:w-full">
-					<Select
-						options={Languages}
-						isSearchable={true}
-						defaultValue={language || language[0]}
-						name="language"
-						isDisabled={submitting}
-						onChange={(e) => handleLanguageChange(e)}
+		<main className="sm:flex h-[calc(100vh-62px)]">
+			<div className="bg-[#1f1e1f] text-white w-full sm:w-[70vw] pt-4 h-full max-[600px]:max-h-[70vh]">
+				<Editor
+					height="calc(100vh - 80px)"
+					width={`100%`}
+					language={language?.value || 'javascript'}
+					theme={'vs-dark'}
+					defaultValue={code}
+					onChange={(e) => {
+						setLastChanged(1);
+						setCode(e);
+					}}
+					className="w-full sm:max-w-[70vw] max-[600px]:max-h-[70vh]"
+					value={code}
+				/>
+			</div>
+			<div className="px-8 w-[30vw] overflow-y-auto max-[600px]:w-full">
+				<Select
+					options={Languages}
+					isSearchable={true}
+					defaultValue={language || language[0]}
+					name="language"
+					isDisabled={submitting}
+					onChange={(e) => handleLanguageChange(e)}
+					className={
+						'my-6 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm ' +
+						(submitting ? 'border-slate-500 shadow-slate-500' : '')
+					}
+				/>
+				<Terminal output={output} />
+				<textarea
+					rows="5"
+					ref={inputRef}
+					placeholder={`Custom input`}
+					className={
+						'w-full border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white text-sm ' +
+						(submitting ? 'opacity-50 cursor-wait' : '')
+					}
+					disabled={submitting}
+				/>
+				<div className="grid grid-cols-2 items-center w-full justify-between ">
+					<div className="py-2 mt-4">
+						{output && (
+							<>
+								{output?.status === 3 ? (
+									<span className="text-green-600 font-semibold">
+										Compiled
+									</span>
+								) : (
+									<span className="text-red-500 font-semibold">
+										{output?.des}
+									</span>
+								)}
+							</>
+						)}
+					</div>
+					<button
 						className={
-							'my-6 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm ' +
-							(submitting
-								? 'border-slate-500 shadow-slate-500'
+							'mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-2 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm max-[600px]:mb-4 ' +
+							(!code || submitting
+								? ' opacity-50 cursor-wait'
 								: '')
 						}
-					/>
-					<Terminal output={output} />
-					<textarea
-						rows="5"
-						ref={inputRef}
-						placeholder={`Custom input`}
-						className={
-							'w-full border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white text-sm ' +
-							(submitting ? 'opacity-50 cursor-wait' : '')
-						}
-						disabled={submitting}
-					/>
-					<div className="grid grid-cols-2 items-center w-full justify-between ">
-						<div className="py-2 mt-4">
-							{output && (
-								<>
-									{output?.status === 3 ? (
-										<span className="text-green-600 font-semibold">
-											Compiled
-										</span>
-									) : (
-										<span className="text-red-500 font-semibold">
-											{output?.des}
-										</span>
-									)}
-								</>
-							)}
-						</div>
-						<button
-							className={
-								'mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-2 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 text-sm max-[600px]:mb-4 ' +
-								(!code || submitting
-									? ' opacity-50 cursor-wait'
-									: '')
-							}
-							disabled={!code || submitting}
-							onClick={handleSubmit}
-						>
-							{!code || submitting ? (
-								<>Processing...</>
-							) : (
-								<>Compile</>
-							)}
-						</button>
-					</div>
+						disabled={!code || submitting}
+						onClick={handleSubmit}
+					>
+						{!code || submitting ? (
+							<>Processing...</>
+						) : (
+							<>Compile</>
+						)}
+					</button>
 				</div>
 			</div>
-		</>
+		</main>
 	);
 }
 

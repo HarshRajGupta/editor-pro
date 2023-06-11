@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Auth, Home, Document } from './components';
+import { Auth, Home, Document, Loader } from './components';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
@@ -44,7 +44,7 @@ function App() {
 	return (
 		<>
 			{loading ? (
-				<h1>Loading...</h1>
+				<Loader />
 			) : (
 				<>
 					{!user ? (

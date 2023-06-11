@@ -4,6 +4,7 @@ import Document from './Document';
 import Home from './Home';
 import Error from './Others/Error';
 import Header from './Others/Header';
+import Loader from './Others/Loader';
 
 export {
     Auth,
@@ -11,5 +12,6 @@ export {
     Document,
     Home,
     Error,
-    Header
+    Header,
+    Loader
 };
