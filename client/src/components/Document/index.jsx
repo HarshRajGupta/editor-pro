@@ -12,10 +12,6 @@ function File({ user, setUser }) {
 		return () => {
 			const docId = window.location.pathname.split('/')[1];
 			if (docId && docId !== '') {
-				socket.emit('request', {
-					docId: docId,
-					userEmail: user.email,
-				});
 				socket.on('response', (data) => {
 					console.log('response', data);
 					if (data.success) {
@@ -47,6 +43,14 @@ function File({ user, setUser }) {
 			}
 		};
 	}, [user]);
+
+	useEffect(() => {
+		const docId = window.location.pathname.split('/')[1];
+		socket.emit('request', {
+			docId: docId,
+			userEmail: user.email,
+		});
+	}, []);
 
 	useEffect(() => {
 		if (lastChanged) {
