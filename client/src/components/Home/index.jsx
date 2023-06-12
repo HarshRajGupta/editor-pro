@@ -133,8 +133,21 @@ function Files({ user, setUser }) {
 							placeholder="New File Name"
 						/>
 						<Select
-							options={Languages}
-							defaultValue={Languages[0]}
+							options={[
+								{
+									id: 43,
+									label: 'Word File',
+									name: 'Word File',
+									value: 'text',
+								},
+								...Languages,
+							]}
+							defaultValue={{
+								id: 43,
+								label: 'Word File',
+								name: 'Word File',
+								value: 'text',
+							}}
 							isSearchable={true}
 							className={
 								'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75 z-10'
