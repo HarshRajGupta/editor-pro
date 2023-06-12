@@ -1,5 +1,6 @@
 import Auth from './Auth';
 import Code from './Code';
+import Doc from './Doc';
 import Document from './Document';
 import Home from './Home';
 import Error from './Others/Error';
@@ -13,5 +14,6 @@ export {
     Home,
     Error,
     Header,
-    Loader
+    Loader,
+    Doc
 };

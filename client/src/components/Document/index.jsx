@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
-import { Code, Header, Loader } from '../';
+import { Code, Header, Loader, Doc } from '../';
 import socket from './socket';
 
 function File({ user, setUser }) {
 	const [file, setFile] = useState(null);
 	const [code, setCode] = useState();
 	const [lastChanged, setLastChanged] = useState(0);
-
 	useEffect(() => {
 		const docId = window.location.pathname.split('/')[1];
 		socket.emit('request', {
 			docId: docId,
-			userEmail: user.email,
+			userEmail: user?.email,
 		});
 		socket.on('response', (data) => {
 			if (data.success) {
 				setFile(data.document);
 				setCode(data.document.data);
+				console.log(data.document);
 			} else {
 				console.error(data.message);
 				toast.error(data.message);
@@ -44,26 +44,37 @@ function File({ user, setUser }) {
 		if (lastChanged) {
 			socket.emit('receive-changes', {
 				data: code,
-				source: user.email,
+				source: user?.email,
 			});
 		}
 	}, [lastChanged, code, user]);
-
 	if (!file) return <Loader />;
 	return (
 		<>
-			<Header
-				user={user}
-				fileName={file.fileName}
-				setUser={setUser}
-			/>
 			{socket.connected ? (
-				<Code
-					code={code}
-					setCode={setCode}
-					defaultLanguage={file.type}
-					setLastChanged={setLastChanged}
-				/>
+				<>
+					{file?.type?.value === 'text' ? (
+						<Doc
+							code={code}
+							setCode={setCode}
+							setLastChanged={setLastChanged}
+						/>
+					) : (
+						<>
+							<Header
+								user={user}
+								fileName={file?.fileName}
+								setUser={setUser}
+							/>
+							<Code
+								code={code}
+								setCode={setCode}
+								defaultLanguage={file?.type}
+								setLastChanged={setLastChanged}
+							/>
+						</>
+					)}
+				</>
 			) : (
 				<Loader />
 			)}

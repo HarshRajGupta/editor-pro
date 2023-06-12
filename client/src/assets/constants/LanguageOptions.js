@@ -1,5 +1,11 @@
 export const Languages = [
     {
+        id: 43,
+        label: "Word File",
+        name: "Word File",
+        value: "text",
+    },
+    {
         id: 63,
         name: "JavaScript (Node.js 12.14.0)",
         label: "JavaScript (Node.js 12.14.0)",
@@ -203,12 +209,6 @@ export const Languages = [
         name: "PHP (7.4.1)",
         label: "PHP (7.4.1)",
         value: "php",
-    },
-    {
-        id: 43,
-        label: "Plain Text",
-        name: "Plain Text",
-        value: "text",
     },
     {
         id: 69,
