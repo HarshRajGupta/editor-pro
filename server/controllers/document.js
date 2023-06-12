@@ -73,7 +73,7 @@ const addUser = async (req, res) => {
         document.users.push(newEmail)
         await document.save();
         console.log(`DEBUG: ${newEmail} added to ${id}`)
-        invitationMail(userEmail, newEmail, document.fileName, document._id)
+        invitationMail(userEmail, newEmail, document.owner, document.fileName, document._id)
         return res.status(200).json({ success: true, message: `${newEmail} Invited` })
     } catch (e) {
         console.log(`ERROR: while adding user`)

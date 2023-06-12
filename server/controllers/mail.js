@@ -32,13 +32,13 @@ const registrationMail = (email, name) => {
     }
 }
 
-const invitationMail = (userMail, newEmail, fileName, docId) => {
+const invitationMail = (userMail, newEmail, owner, fileName, docId) => {
     const subject = "Invitation to collaborate"
     const text = `${userMail} invited you to collaborate on document ${fileName}.\nClick here to accept the invitation: ${process.env.CLIENT_URL}/${docId}`
     const mailDetails = {
         from: process.env.MAIL,
         to: newEmail,
-        bcc: userMail,
+        bcc: owner,
         subject: subject,
         text: text
     };
