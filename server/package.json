@@ -1,6 +1,6 @@
 {
 	"name": "editor-pro",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "A code and text editor app",
 	"main": "server.js",
 	"scripts": {
