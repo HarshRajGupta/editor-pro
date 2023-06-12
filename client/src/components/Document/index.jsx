@@ -17,7 +17,6 @@ function File({ user, setUser }) {
 			if (data.success) {
 				setFile(data.document);
 				setCode(data.document.data);
-				console.log(data.document);
 			} else {
 				console.error(data.message);
 				toast.error(data.message);

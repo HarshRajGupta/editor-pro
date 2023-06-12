@@ -9,10 +9,18 @@ import { Header } from '../';
 function Files({ user, setUser }) {
 	const navigate = useNavigate();
 	const [files, setFiles] = useState([]);
-	const [fileType, setFileType] = useState(Languages[0]);
 	const [creating, setCreating] = useState(false);
 	const fileRef = useRef(null);
-
+	const options = [
+		{
+			id: 43,
+			label: 'Word File',
+			name: 'Word File',
+			value: 'text',
+		},
+		...Languages,
+	];
+	const [fileType, setFileType] = useState(options[0]);
 	const deleteFile = async (id, fileName) => {
 		try {
 			await axios.post('/api/document/delete', {
@@ -133,21 +141,8 @@ function Files({ user, setUser }) {
 							placeholder="New File Name"
 						/>
 						<Select
-							options={[
-								{
-									id: 43,
-									label: 'Word File',
-									name: 'Word File',
-									value: 'text',
-								},
-								...Languages,
-							]}
-							defaultValue={{
-								id: 43,
-								label: 'Word File',
-								name: 'Word File',
-								value: 'text',
-							}}
+							options={options}
+							defaultValue={options[0]}
 							isSearchable={true}
 							className={
 								'w-fit h-fit m-auto text-xs md:text-sm max-[600px]:text-[10px] max-[600px]:p-0 max-[600px]:scale-75 z-10'
