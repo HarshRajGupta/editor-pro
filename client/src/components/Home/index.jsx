@@ -18,6 +18,12 @@ function Files({ user, setUser }) {
 			name: 'Word File',
 			value: 'text',
 		},
+		{
+			id: 42,
+			label: 'Markdown',
+			name: 'Markdown',
+			value: 'markdown',
+		},
 		...Languages,
 	];
 	const [fileType, setFileType] = useState(options[0]);

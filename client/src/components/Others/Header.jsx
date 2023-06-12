@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Logo } from '../../assets';
 import { Moodle } from '../';
 
-function Header({ user, setUser, fileName }) {
+function Header({ user, setUser, fileName, isLight }) {
 	const [showMoodle, setShowMoodle] = useState(false);
 	const logOut = () => {
 		localStorage.removeItem('token');
@@ -11,7 +11,7 @@ function Header({ user, setUser, fileName }) {
 	const docId = window.location.pathname.split('/')[1];
 	let bg1 = 'white',
 		bg2 = '[#1f1e1f]';
-	if (!fileName) {
+	if (isLight || !fileName) {
 		bg1 = '[#1f1e1f]';
 		bg2 = 'white';
 	}
@@ -41,7 +41,7 @@ function Header({ user, setUser, fileName }) {
 					<div className="flex items-center">
 						<div
 							onClick={() => setShowMoodle(true)}
-							className="mr-6 text-sm text-gray-500 dark:text-white hover:underline cursor-pointer"
+							className={`mr-6 text-sm text-${bg1} hover:underline cursor-pointer`}
 						>
 							{docId ? 'Invite' : ''}
 						</div>

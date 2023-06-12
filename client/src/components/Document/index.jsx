@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Code, Header, Loader, Doc } from '../';
+import { Code, Header, Loader, Doc, Markdown } from '../';
 import socket from './socket';
 
 function File({ user, setUser }) {
@@ -45,7 +45,7 @@ function File({ user, setUser }) {
 				data: code,
 				source: user?.email,
 			});
-			setLastChanged(0)
+			setLastChanged(0);
 		}
 	}, [lastChanged, code, user]);
 	if (!file) return <Loader />;
@@ -66,13 +66,22 @@ function File({ user, setUser }) {
 								user={user}
 								fileName={file?.fileName}
 								setUser={setUser}
+								isLight={file?.type?.value === 'markdown'}
 							/>
-							<Code
-								code={code}
-								setCode={setCode}
-								defaultLanguage={file?.type}
-								setLastChanged={setLastChanged}
-							/>
+							{file?.type?.value === 'markdown' ? (
+								<Markdown
+									code={code}
+									setCode={setCode}
+									setLastChanged={setLastChanged}
+								/>
+							) : (
+								<Code
+									code={code}
+									setCode={setCode}
+									defaultLanguage={file?.type}
+									setLastChanged={setLastChanged}
+								/>
+							)}
 						</>
 					)}
 				</>

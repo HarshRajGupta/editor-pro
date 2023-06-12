@@ -1,5 +1,10 @@
 export const DefaultCode = [
     {
+        id: 42,
+        value: "markdown",
+        code: "**Hello world!!!**"
+    },
+    {
         id: 63,
         value: "javascript",
         code: 'function fun() {\n\tconsole.log("Hello World!");\n\treturn;\n}\n\nfun();'

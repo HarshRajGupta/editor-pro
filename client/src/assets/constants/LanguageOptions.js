@@ -6,22 +6,34 @@ export const Languages = [
         value: "javascript",
     },
     {
-        id: 45,
-        name: "Assembly (NASM 2.14.02)",
-        label: "Assembly (NASM 2.14.02)",
-        value: "assembly",
+        id: 50,
+        name: "C (GCC 9.2.0)",
+        label: "C (GCC 9.2.0)",
+        value: "c",
+    },
+    {
+        id: 54,
+        name: "C++ (GCC 9.2.0)",
+        label: "C++ (GCC 9.2.0)",
+        value: "cpp",
+    },
+    {
+        id: 71,
+        name: "Python (3.8.1)",
+        label: "Python (3.8.1)",
+        value: "python",
+    },
+    {
+        id: 62,
+        name: "Java (OpenJDK 13.0.1)",
+        label: "Java (OpenJDK 13.0.1)",
+        value: "java",
     },
     {
         id: 46,
         name: "Bash (5.0.0)",
         label: "Bash (5.0.0)",
         value: "bash",
-    },
-    {
-        id: 47,
-        name: "Basic (FBC 1.07.1)",
-        label: "Basic (FBC 1.07.1)",
-        value: "basic",
     },
     {
         id: 75,
@@ -60,16 +72,16 @@ export const Languages = [
         value: "cpp",
     },
     {
-        id: 50,
-        name: "C (GCC 9.2.0)",
-        label: "C (GCC 9.2.0)",
-        value: "c",
+        id: 45,
+        name: "Assembly (NASM 2.14.02)",
+        label: "Assembly (NASM 2.14.02)",
+        value: "assembly",
     },
     {
-        id: 54,
-        name: "C++ (GCC 9.2.0)",
-        label: "C++ (GCC 9.2.0)",
-        value: "cpp",
+        id: 47,
+        name: "Basic (FBC 1.07.1)",
+        label: "Basic (FBC 1.07.1)",
+        value: "basic",
     },
     {
         id: 86,
@@ -149,12 +161,7 @@ export const Languages = [
         label: "Haskell (GHC 8.8.1)",
         value: "haskell",
     },
-    {
-        id: 62,
-        name: "Java (OpenJDK 13.0.1)",
-        label: "Java (OpenJDK 13.0.1)",
-        value: "java",
-    },
+
 
     {
         id: 78,
@@ -216,12 +223,7 @@ export const Languages = [
         label: "Python (2.7.17)",
         value: "python",
     },
-    {
-        id: 71,
-        name: "Python (3.8.1)",
-        label: "Python (3.8.1)",
-        value: "python",
-    },
+
     {
         id: 80,
         name: "R (4.0.0)",
