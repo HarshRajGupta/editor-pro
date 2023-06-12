@@ -39,7 +39,9 @@ function Doc({ user, code, setCode, setLastChanged }) {
 					</span>
 				</span>
 				<Editor
-					onKeyPress={() => setLastChanged(1)}
+					onKeyPress={() => {
+						setLastChanged(1);
+					}}
 					apiKey={process.env.REACT_APP_EDITOR_KEY}
 					onInit={(evt, editor) => {
 						editorRef.current = editor;
