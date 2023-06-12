@@ -19,9 +19,9 @@ function App() {
 				})
 				.then((res) => {
 					setUser({
-						userName: res.data.userName,
-						email: res.data.email,
-						id: res.data.id,
+						userName: res?.data?.userName,
+						email: res?.data?.email,
+						id: res?.data?.id,
 					});
 					toast.success(res.data.message);
 					setLoading(false);

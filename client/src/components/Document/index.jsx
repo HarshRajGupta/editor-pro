@@ -45,6 +45,7 @@ function File({ user, setUser }) {
 				data: code,
 				source: user?.email,
 			});
+			setLastChanged(0)
 		}
 	}, [lastChanged, code, user]);
 	if (!file) return <Loader />;
