@@ -39,16 +39,15 @@ function Doc({ user, code, setCode, setLastChanged }) {
 					</span>
 				</span>
 				<Editor
+					onKeyPress={() => setLastChanged(1)}
 					apiKey={process.env.REACT_APP_EDITOR_KEY}
 					onInit={(evt, editor) => {
-						evt.target.setContent(code);
 						editorRef.current = editor;
 						setLoading(false);
 					}}
 					value={code}
 					onEditorChange={(e) => {
 						setCode(e);
-						setLastChanged(1);
 					}}
 					init={{
 						draggable_modal: true,

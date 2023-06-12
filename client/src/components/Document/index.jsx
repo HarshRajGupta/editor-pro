@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Code, Header, Loader, Doc } from '../';
 import socket from './socket';
@@ -38,6 +38,7 @@ function File({ user, setUser }) {
 		socket.on('disconnect', () => {
 			toast.error(`Connection Lost...!`);
 		});
+		document.addEventListener('keypress', () => console.log('key pressed'));
 	}, []);
 
 	useEffect(() => {
@@ -52,7 +53,7 @@ function File({ user, setUser }) {
 	return (
 		<>
 			{socket.connected ? (
-				<>
+				<div onKeyPress={() => console.log('pressed')}>
 					{file?.type?.value === 'text' ? (
 						<Doc
 							user={user}
@@ -75,7 +76,7 @@ function File({ user, setUser }) {
 							/>
 						</>
 					)}
-				</>
+				</div>
 			) : (
 				<Loader />
 			)}
