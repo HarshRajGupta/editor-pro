@@ -55,6 +55,7 @@ function File({ user, setUser }) {
 				<>
 					{file?.type?.value === 'text' ? (
 						<Doc
+							user={user}
 							code={code}
 							setCode={setCode}
 							setLastChanged={setLastChanged}

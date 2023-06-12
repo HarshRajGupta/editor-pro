@@ -62,17 +62,19 @@ const addUser = async (req, res) => {
     console.log("POST /api/document/invite");
     try {
         console.log(req.body)
-        const { id, userEmail, newEmail } = req.body;
+        const id = req.body.id;
+        const userEmail = req.body.userEmail.toLowerCase();
+        const newEmail = req.body.newEmail.toLowerCase();
         if (!id || !userEmail || !newEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const document = await Document.findById(id)
         if (!document) return res.status(400).json({ success: false, message: 'Document does not exist' })
         const permit = document.users.find(email => email === newEmail);
-        if (permit) return res.status(200).json({ success: true, message: 'User already invited' })
+        if (permit) return res.status(400).json({ success: true, message: 'Invitation already sent' })
         document.users.push(newEmail)
         await document.save();
         console.log(`DEBUG: ${newEmail} added to ${id}`)
         invitationMail(userEmail, newEmail, document.fileName, document._id)
-        return res.status(200).json({ success: true, message: 'User added' })
+        return res.status(200).json({ success: true, message: `${newEmail} Invited` })
     } catch (e) {
         console.log(`ERROR: while adding user`)
         console.error(e)

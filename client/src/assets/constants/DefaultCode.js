@@ -139,7 +139,7 @@ export const DefaultCode = [
     }, {
         id: 43,
         value: "text",
-        code: ""
+        code: "<h1>Hello World!</h1>"
     }, {
         id: 69,
         value: "prolog",

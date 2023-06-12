@@ -6,6 +6,7 @@ import Home from './Home';
 import Error from './Others/Error';
 import Header from './Others/Header';
 import Loader from './Others/Loader';
+import Moodle from './Others/Invite';
 
 export {
     Auth,
@@ -15,5 +16,6 @@ export {
     Error,
     Header,
     Loader,
-    Doc
+    Doc,
+    Moodle
 };
