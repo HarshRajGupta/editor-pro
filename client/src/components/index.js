@@ -7,7 +7,7 @@ import Markdown from './MarkDown';
 import Error from './Others/Error';
 import Header from './Others/Header';
 import Loader from './Others/Loader';
-import Moodle from './Others/Invite';
+import Moodle from './Others/Moodle';
 
 export {
     Auth,

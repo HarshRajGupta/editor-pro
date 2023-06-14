@@ -48,6 +48,9 @@ const getDocumentById = async (req, res) => {
         if (!id || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const document = await Document.findById(id);
         if (!document) return res.status(400).json({ success: false, message: 'Document does not exist' })
+        if (document.openToAll) {
+            return res.status(200).json({ success: true, message: 'Document fetched', document: document })
+        }
         const permit = document.users.find(email => email === userEmail);
         if (!permit) return res.status(400).json({ success: false, message: 'You are not allowed to view this document' })
         return res.status(200).json({ success: true, message: 'Document fetched', document: document })
@@ -123,11 +126,33 @@ const changeType = async (req, res) => {
     }
 }
 
+const openToAll = async (req, res) => {
+    console.log(`POST /api/document/open`)
+    try {
+        console.log(req.body);
+        const { docId, status } = req.body;
+        const userEmail = req.body.userEmail.toLowerCase();
+        if (!docId || status === null || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request', status: status, docId: docId, userEmail: userEmail })
+        const document = await Document.findById(docId);
+        if (!document) return res.status(400).json({ success: false, message: 'Document does not exist' })
+        if (document.owner != userEmail) return res.status(400).json({ success: false, message: 'Only owner can change this' })
+        document.openToAll = status;
+        await document.save();
+        console.log(`DEBUG: ${docId} openToAll changed to ${status}`)
+        return res.status(200).json({ success: true, message: 'Document openToAll changed' })
+    } catch (e) {
+        console.log(`ERROR: while changing document openToAll`)
+        console.error(e)
+        return res.status(500).json({ success: false, message: 'Something went wrong!! Please try again' })
+    }
+}
+
 module.exports = {
     createDocument,
     getDocuments,
     addUser,
     getDocumentById,
     deleteDocument,
-    changeType
+    changeType,
+    openToAll
 }

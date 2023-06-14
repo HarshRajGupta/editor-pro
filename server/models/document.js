@@ -22,6 +22,10 @@ const Document = new Schema({
     owner: {
         type: String,
         required: true
+    },
+    openToAll: {
+        type: Boolean,
+        default: false
     }
 })
 

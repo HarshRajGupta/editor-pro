@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Logo } from '../../assets';
 import { Moodle } from '../';
 
-function Header({ user, setUser, fileName, isLight }) {
+function Header({ user, setUser, fileName, isLight, openToAll, setOpenToAll }) {
 	const [showMoodle, setShowMoodle] = useState(false);
 	const logOut = () => {
 		localStorage.removeItem('token');
@@ -22,6 +22,8 @@ function Header({ user, setUser, fileName, isLight }) {
 					setShowMoodle={setShowMoodle}
 					docId={window.location.pathname.split('/')[1]}
 					user={user}
+					openToAll={openToAll}
+					setOpenToAll={setOpenToAll}
 				/>
 			)}
 			<nav className={`border-gray-200 bg-${bg2} z-10`}>
@@ -43,7 +45,7 @@ function Header({ user, setUser, fileName, isLight }) {
 							onClick={() => setShowMoodle(true)}
 							className={`mr-6 text-sm text-${bg1} hover:underline cursor-pointer`}
 						>
-							{docId ? 'Invite' : ''}
+							{docId ? 'Share' : ''}
 						</div>
 						{user ? (
 							<>

@@ -7,16 +7,17 @@ function File({ user, setUser }) {
 	const [file, setFile] = useState(null);
 	const [code, setCode] = useState();
 	const [lastChanged, setLastChanged] = useState(0);
+	const [openToAll, setOpenToAll] = useState(false);
 	useEffect(() => {
-		const docId = window.location.pathname.split('/')[1];
 		socket.emit('request', {
-			docId: docId,
+			docId: window.location.pathname.split('/')[1],
 			userEmail: user?.email,
 		});
 		socket.on('response', (data) => {
 			if (data.success) {
 				setFile(data.document);
 				setCode(data.document.data);
+				setOpenToAll(data.document.openToAll);
 			} else {
 				console.error(data.message);
 				toast.error(data.message);
@@ -59,6 +60,8 @@ function File({ user, setUser }) {
 							code={code}
 							setCode={setCode}
 							setLastChanged={setLastChanged}
+							openToAll={openToAll}
+							setOpenToAll={setOpenToAll}
 						/>
 					) : (
 						<>
@@ -67,6 +70,8 @@ function File({ user, setUser }) {
 								fileName={file?.fileName}
 								setUser={setUser}
 								isLight={file?.type?.value === 'markdown'}
+								openToAll={openToAll}
+								setOpenToAll={setOpenToAll}
 							/>
 							{file?.type?.value === 'markdown' ? (
 								<Markdown

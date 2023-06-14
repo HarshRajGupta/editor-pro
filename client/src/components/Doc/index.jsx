@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Loader, Moodle } from '../';
 
-function Doc({ user, code, setCode, setLastChanged }) {
+function Doc({ user, code, setCode, setLastChanged, openToAll, setOpenToAll }) {
 	const editorRef = useRef(null);
 	const [loading, setLoading] = useState(true);
 	const [showMoodle, setShowMoodle] = useState(false);
@@ -17,6 +17,8 @@ function Doc({ user, code, setCode, setLastChanged }) {
 					setShowMoodle={setShowMoodle}
 					docId={window.location.pathname.split('/')[1]}
 					user={user}
+					openToAll={openToAll}
+					setOpenToAll={setOpenToAll}
 				/>
 			)}
 			<div className={loading ? 'hidden' : 'z-0'}>
@@ -29,7 +31,7 @@ function Doc({ user, code, setCode, setLastChanged }) {
 						className="mr-4 cursor-pointer"
 						onClick={() => setShowMoodle(true)}
 					>
-						Invite
+						Share
 					</span>
 					<span
 						className="cursor-pointer"
@@ -40,7 +42,7 @@ function Doc({ user, code, setCode, setLastChanged }) {
 				</span>
 				<Editor
 					onKeyDown={(e) => {
-						setLastChanged(1)
+						setLastChanged(1);
 					}}
 					apiKey={process.env.REACT_APP_EDITOR_KEY}
 					onInit={(evt, editor) => {
