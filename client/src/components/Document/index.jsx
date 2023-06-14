@@ -38,6 +38,9 @@ function File({ user, setUser }) {
 		socket.on('disconnect', () => {
 			toast.error(`Connection Lost...!`);
 		});
+		return () => {
+			socket.emit('leave-room');
+		};
 	}, []);
 
 	useEffect(() => {

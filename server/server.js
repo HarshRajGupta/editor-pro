@@ -81,9 +81,14 @@ io.on("connection", socket => {
 					console.error(e)
 				}
 			})
+			socket.on("leave-room", () => {
+				console.log(`IO: ${data.userEmail} left ${data.docId}`)
+				socket.leave(data.docId)
+				return socket.broadcast.to(data.docId).emit("user-left", data.userEmail)
+			})
 			socket.on("disconnect", () => {
 				console.log(`IO: ${data.userEmail} disconnected from ${data.docId}`)
-				socket.broadcast.to(data.docId).emit("user-left", data.userEmail)
+				return socket.broadcast.to(data.docId).emit("user-left", data.userEmail)
 			})
 		} catch (e) {
 			console.log(`IO: error while fetching ${data.docId}`)
