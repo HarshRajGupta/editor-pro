@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Loader, Moodle } from '../';
 
-function Doc({ user, code, setCode, setLastChanged, openToAll, setOpenToAll }) {
+function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
 	const editorRef = useRef(null);
 	const [loading, setLoading] = useState(true);
 	const [showMoodle, setShowMoodle] = useState(false);
@@ -49,9 +49,9 @@ function Doc({ user, code, setCode, setLastChanged, openToAll, setOpenToAll }) {
 						editorRef.current = editor;
 						setLoading(false);
 					}}
-					value={code}
+					value={text}
 					onEditorChange={(e) => {
-						setCode(e);
+						setText(e);
 					}}
 					init={{
 						draggable_modal: true,

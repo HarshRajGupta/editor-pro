@@ -23,6 +23,7 @@ function App() {
 						email: res?.data?.email,
 						id: res?.data?.id,
 					});
+					document.title = res.data?.userName || 'Editor-Pro';
 					toast.success(res.data.message);
 					setLoading(false);
 				})

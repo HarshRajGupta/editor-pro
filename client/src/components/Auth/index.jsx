@@ -25,6 +25,7 @@ function Auth({ setUser }) {
 				.then((res) => {
 					localStorage.setItem('token', res.data.token);
 					toast.success(res.data.message);
+					document.title = res.data?.user?.userName || 'Editor-Pro';
 					setUser(res.data?.user);
 				})
 				.catch((err) => {
