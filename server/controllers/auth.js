@@ -95,12 +95,17 @@ const verifyToken = (req, res) => {
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, async (err, userData) => {
                 if (err) {
-                    console.error(err);
-                    throw err;
+                    console.log(`DEBUG: Invalid Token`)
+                    console.error(err)
+                    return res.status(500).json({ success: false, error: `Invalid Token` });
                 }
                 const user = await User.findById(
                     userData.id
                 );
+                if (!user) {
+                    console.log(`DEBUG: User not found`)
+                    return res.status(404).json({ success: false, message: "User not found" });
+                }
                 const { userName, email, _id } = user;
                 console.log(`DEBUG: User ${email} verified`)
                 return res.status(200).json({
@@ -114,7 +119,6 @@ const verifyToken = (req, res) => {
                 message: "Please login"
             });
         }
-
     } catch (err) {
         console.log(`DEBUG: Error while verifying token`)
         console.error(err)
