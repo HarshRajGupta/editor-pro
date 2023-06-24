@@ -1,16 +1,28 @@
 {
 	"name": "editor-pro",
-	"version": "2.0.0",
-	"description": "A code and text editor app",
+	"version": "0.2.0",
+	"private": true,
+	"description": "A feature rich Text and Code Editor that combines document sharing, editing, and compilation capabilities",
 	"main": "server.js",
 	"scripts": {
 		"dev": "clear && nodemon start",
 		"start": "node server.js"
 	},
+	"keywords": [
+		"code",
+		"code-editor",
+		"compiler",
+		"live-sharing",
+		"web-sockets"
+	],
 	"repository": {
 		"type": "git",
-		"url": "github.com/HarshRajGupta/hardEdit"
+		"url": "github.com/HarshRajGupta/editor-pro.git"
 	},
+	"bugs": {
+		"url": "https://github.com/HarshRajGupta/editor-pro/issues"
+	},
+	"homepage": "https://editor-pro.onrender.com",
 	"author": "HarshRajGupta",
 	"license": "ISC",
 	"dependencies": {
@@ -21,8 +33,11 @@
 		"http": "^0.0.1-security",
 		"jsonwebtoken": "^9.0.0",
 		"mongoose": "^7.0.0",
+		"morgan": "^1.10.0",
 		"nodemailer": "^6.9.3",
-		"nodemon": "^2.0.22",
 		"socket.io": "^4.6.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
 	}
 }

@@ -1,10 +1,10 @@
-const indexPage = `<!DOCTYPE html>
+module.exports = (delay) => `<!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<title>Editor-Pro</title>
-	<meta http-equiv="refresh" content="1; url = ${process.env.CLIENT_URL}" />
+	<meta http-equiv="refresh" content="${delay}; url = ${process.env.CLIENT_URL}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<style>
 		* {
@@ -277,5 +277,3 @@ const indexPage = `<!DOCTYPE html>
 
 </html>
 `
-
-module.exports = indexPage

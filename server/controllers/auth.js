@@ -5,7 +5,7 @@ const bcryptSalt = bcrypt.genSaltSync(10);
 const { registrationMail } = require('./mail')
 
 const registerUser = async (req, res) => {
-    console.log('POST /api/auth/register')
+    // console.log('POST /api/auth/register')
     try {
         console.log(req.body);
         const { userName, password } = req.body;
@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    console.log('POST /api/auth/login');
+    // console.log('POST /api/auth/login');
     try {
         console.log(req.body);
         const { password } = req.body;
@@ -88,7 +88,7 @@ const loginUser = async (req, res) => {
 };
 
 const verifyToken = (req, res) => {
-    console.log("POST /api/user/");
+    // console.log("POST /api/user/");
     try {
         console.log(req.body);
         const { token } = req.body;

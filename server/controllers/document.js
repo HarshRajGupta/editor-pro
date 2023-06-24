@@ -2,7 +2,7 @@ const Document = require("../models/document")
 const { invitationMail } = require("./mail")
 
 const createDocument = async (req, res) => {
-    console.log(`POST /api/document/create`)
+    // console.log(`POST /api/document/create`)
     try {
         console.log(req.body)
         const { type, fileName, defaultCode } = req.body;
@@ -25,7 +25,7 @@ const createDocument = async (req, res) => {
 }
 
 const getDocuments = async (req, res) => {
-    console.log(`POST /api/document/`)
+    // console.log(`POST /api/document/`)
     try {
         console.log(req.body)
         const userEmail = req.body.userEmail.toLowerCase();
@@ -41,7 +41,7 @@ const getDocuments = async (req, res) => {
 }
 
 const getDocumentById = async (req, res) => {
-    console.log(`POST /api/document/get`)
+    // console.log(`POST /api/document/get`)
     try {
         const { id } = req.body;
         const userEmail = req.body.userEmail.toLowerCase();
@@ -62,7 +62,7 @@ const getDocumentById = async (req, res) => {
 }
 
 const addUser = async (req, res) => {
-    console.log("POST /api/document/invite");
+    // console.log("POST /api/document/invite");
     try {
         console.log(req.body)
         const id = req.body.id;
@@ -86,7 +86,7 @@ const addUser = async (req, res) => {
 }
 
 const deleteDocument = async (req, res) => {
-    console.log("POST /api/document/delete");
+    // console.log("POST /api/document/delete");
     try {
         console.log(req.body)
         const { id } = req.body;
@@ -108,7 +108,7 @@ const deleteDocument = async (req, res) => {
 }
 
 const changeType = async (req, res) => {
-    console.log(`POST /api/document/type`)
+    // console.log(`POST /api/document/type`)
     try {
         console.log(req.body);
         const { id, type } = req.body;
@@ -127,7 +127,7 @@ const changeType = async (req, res) => {
 }
 
 const openToAll = async (req, res) => {
-    console.log(`POST /api/document/open`)
+    // console.log(`POST /api/document/open`)
     try {
         console.log(req.body);
         const { docId, status } = req.body;
