@@ -1,4 +1,4 @@
-![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/332422ff-e4c2-4d2a-887d-86df41e4399f)# Editor-Pro
+# Editor-Pro
 
 This project is a web application that combines Express.js/Node.js on the backend and React on the frontend, utilizing several libraries for enhanced functionality. It integrates Socket.IO for real-time communication, MongoDB for data storage, Nodemailer for email functionality, and leverages Tailwind CSS and Sass for styling.
 
