@@ -1,4 +1,4 @@
-# Editor-Pro
+![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/332422ff-e4c2-4d2a-887d-86df41e4399f)# Editor-Pro
 
 This project is a web application that combines Express.js/Node.js on the backend and React on the frontend, utilizing several libraries for enhanced functionality. It integrates Socket.IO for real-time communication, MongoDB for data storage, Nodemailer for email functionality, and leverages Tailwind CSS and Sass for styling.
 
@@ -17,14 +17,20 @@ Please note that these credentials are only for testing purposes and should not 
 
 ## Usage
 
-1. Login using the provided testing credentials or register as a new user and login with the newly created credentials.
-2. After logging in, you will see a list of documents that were created by you or shared with you.
-3. To create a new document, fill in the file name, select its type, and click on the "New File" button.
-4. To open an already created document, simply click on the document in the list.
-5. To invite other collaborators, click on the "Share" button at the top and provide their email addresses.
+1. Login using the provided testing credentials or register as a new user and login with the newly created credentials.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/68a7b2da-9595-4530-abcc-c0b1e61e82ce)
+
+2. After logging in, you will see a list of documents that were created by you or shared with you.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/4cd88ef0-ddc5-44b9-aa52-fac4902cf8eb)
+
+3. To create a new document, fill in the file name, select its type, and click on the "New File" button.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/8a8ae5dc-75da-4f96-8bc3-a86d812fb4a7)
+
+4. To open an already created document, simply click on the document in the list.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/034cb671-eae8-46fb-966a-a5daf7777bb6)
+
+5. To invite other collaborators, click on the "Share" button at the top and provide their email addresses.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/b8f82cb1-9ecf-4677-8ec8-1f006584f068)
+
 6. Only the original creator of a file can make the document open to all or restrict access, as well as delete the document.
 
-7. For compilation, fill in the input in the custom input box and press the "Compile" button. You can also change the programming language if needed. The output will be displayed in the output box on the right side.
+7. For compilation, fill in the input in the custom input box and press the "Compile" button. You can also change the programming language if needed. The output will be displayed in the output box on the right side.![image](https://github.com/HarshRajGupta/editor-pro/assets/85221003/d6fbb7c8-f667-4209-ac4f-7ff42809a6d1)
+
 
 Please note that these usage instructions are a general guide, and the actual features and functionalities may vary based on the specific implementation of the application.
 
