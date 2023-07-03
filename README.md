@@ -1,5 +1,5 @@
 # Editor-Pro
-[![](https://github-readme-stats.vercel.app/api/pin/?username=HarshRajGupta&repo=editor-pro)](https://github.com/HarshRajGupta/editor-pro)
+[![](https://github-readme-stats.vercel.app/api/pin/?username=HarshRajGupta&repo=editor-pro)](https://www.github.com/HarshRajGupta/editor-pro)
 This project is a web application that combines Express.js/Node.js on the backend and React on the frontend, utilizing several libraries for enhanced functionality. It integrates Socket.IO for real-time communication, MongoDB for data storage, Nodemailer for email functionality, and leverages Tailwind CSS and Sass for styling.
 
 ## Live Site
