@@ -35,7 +35,7 @@ function Moodle({ setShowMoodle, docId, user, openToAll, setOpenToAll }) {
 	return (
 		<div
 			id="authentication-modal"
-			className="fixed top-0 left-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full items-center flex justify-center bg-slate-900 bg-opacity-80"
+			className="fixed top-0 left-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 items-center flex justify-center bg-slate-900 bg-opacity-80 h-full"
 		>
 			<div className="relative w-full max-w-md max-h-full justify-center mx-auto">
 				<div className="relative bg-white rounded-lg shadow">

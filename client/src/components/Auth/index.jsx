@@ -10,8 +10,10 @@ function Auth({ setUser }) {
 	const [emailPlaceholder, setEmailPlaceholder] = useState(true);
 	const [passwordPlaceholder, setPasswordPlaceholder] = useState(true);
 	const [namePlaceholder, setNamePlaceholder] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setLoading(true);
 		const user = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
@@ -23,21 +25,24 @@ function Auth({ setUser }) {
 			await axios
 				.post(`/api/auth/${page}`, user)
 				.then((res) => {
+					setLoading(false);
 					localStorage.setItem('token', res.data.token);
 					toast.success(res.data.message);
 					document.title = res.data?.user?.userName || 'Editor-Pro';
-					setUser(res.data?.user);
+					return setUser(res.data?.user);
 				})
 				.catch((err) => {
+					setLoading(false);
 					if (!err.response) {
 						toast.error('Something went wrong!');
 					} else {
 						toast.error(err.response?.data?.message);
 					}
-					console.error(err);
+					return console.error(err);
 				});
 		} catch (err) {
-			console.error(err);
+			setLoading(false);
+			return console.error(err);
 		}
 	};
 	return (
@@ -63,6 +68,7 @@ function Auth({ setUser }) {
 									name="userName"
 									autocomplete={`off`}
 									ref={nameRef}
+									disabled={loading}
 									onChange={(e) => {
 										setNamePlaceholder(
 											e.target.value ? false : true,
@@ -87,6 +93,7 @@ function Auth({ setUser }) {
 								name="email"
 								autoComplete={`off`}
 								ref={emailRef}
+								disabled={loading}
 								onChange={(e) => {
 									setEmailPlaceholder(
 										e.target.value ? false : true,
@@ -112,6 +119,7 @@ function Auth({ setUser }) {
 								type="password"
 								name="pass"
 								autoComplete={`off`}
+								disabled={loading}
 								ref={passwordRef}
 								onChange={(e) => {
 									setPasswordPlaceholder(
@@ -130,12 +138,19 @@ function Auth({ setUser }) {
 							/>
 						</div>
 
-						<div className="container-login100-form-btn">
+						<div
+							className={
+								loading
+									? `container-login100-form-btn opacity-50`
+									: `container-login100-form-btn`
+							}
+						>
 							<div className="wrap-login100-form-btn">
 								<div className="login100-form-bgbtn"></div>
 								<button
 									className="login100-form-btn"
 									onClick={handleSubmit}
+									disabled={loading}
 								>
 									{page === 'login' ? 'Login' : 'Sign Up'}
 								</button>

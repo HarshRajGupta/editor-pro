@@ -32,7 +32,11 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 			},
 		};
 		try {
-			const response = await axios.request(options);
+			let response = await axios.request(options);
+			console.log('token', response);
+			// while (response.data?.status?.id === 2) {
+			// 	response = await axios.request(options);
+			// }
 			let stdOut = null;
 			if (response.data?.stdout) stdOut = atob(response.data?.stdout);
 			let stdErr = null;
@@ -70,6 +74,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		};
 		try {
 			const response = await axios.request(options);
+			console.log('compile', response);
 			await deCodeToken(response.data.token);
 			setSubmitting(false);
 		} catch (err) {
