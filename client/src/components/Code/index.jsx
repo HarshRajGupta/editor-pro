@@ -34,9 +34,17 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		try {
 			let response = await axios.request(options);
 			console.log('token', response);
-			// while (response.data?.status?.id === 2) {
-			// 	response = await axios.request(options);
-			// }
+			while (
+				response.data.status.id === 1 ||
+				response.data.status.id === 2
+			) {
+				setOutput({
+					status: response.data.status.id,
+					des: 'Processing...',
+				});
+				response = await axios.request(options);
+				console.log('token', response);
+			}
 			let stdOut = null;
 			if (response.data?.stdout) stdOut = atob(response.data?.stdout);
 			let stdErr = null;
