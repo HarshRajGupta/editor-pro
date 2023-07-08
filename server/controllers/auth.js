@@ -11,6 +11,10 @@ const registerUser = async (req, res) => {
         const { userName, password } = req.body;
         const email = req.body.email.toLowerCase();
         if (!userName || !email || !password) return res.status(400).json({ success: false, message: 'Bad Request' })
+        const prevUser = await User.findOne({ email });
+        if (prevUser) {
+            return res.status(400).json({ success: false, message: 'User already registered' })
+        }
         const user = await User.create({
             userName,
             email,
