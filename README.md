@@ -9,9 +9,9 @@ For a live demonstration of the project, you can visit the [Editor-Pro Live Site
 
 To test the application's functionality, you can use the following testing credentials:
 
-Email: ```test@mail```
+Email: ```test@mail.com```
 
-Password: ```test123```
+Password: ```12345678```
 
 Please note that these credentials are only for testing purposes and should not be used for personal purposes and user itself will be responsible for any kind of data loss or leak.
 

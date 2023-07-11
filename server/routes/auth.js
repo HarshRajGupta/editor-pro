@@ -8,7 +8,7 @@ const {
 } = require("../controllers/auth");
 
 
-router.route("/signup").post(registerUser);
+router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/").post(verifyToken);
 
