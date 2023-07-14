@@ -100,6 +100,7 @@ function Auth({ setUser }) {
 				});
 		} catch (err) {
 			setLoading(false);
+			toast.error(err.response?.data?.message);
 			return console.error(err);
 		}
 	};

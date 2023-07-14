@@ -4,6 +4,7 @@ import Select from 'react-select';
 import Terminal from './Terminal';
 import axios from 'axios';
 import { Languages } from '../../assets';
+import { toast } from 'react-toastify';
 
 function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 	const inputRef = useRef(null);
@@ -19,6 +20,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 			});
 		} catch (err) {
 			console.error(err);
+			toast.error(err.response?.data?.message);
 		}
 	};
 	const deCodeToken = async (token) => {
@@ -59,6 +61,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		} catch (err) {
 			setSubmitting(false);
 			console.error('Token Decode Failed', err);
+			toast.error("Something went wrong");
 		}
 	};
 	const handleSubmit = async () => {
@@ -88,6 +91,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		} catch (err) {
 			setSubmitting(false);
 			console.error('Compile Failed', err);
+			toast.error("Compile Failed");
 		}
 	};
 	return (
