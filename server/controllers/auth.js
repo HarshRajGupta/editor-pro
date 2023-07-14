@@ -78,7 +78,7 @@ const loginUser = async (req, res) => {
                 );
             } else {
                 console.log(`DEBUG: Incorrect Password for ${email}`)
-                return res.status(422).json("Incorrect Password");
+                return res.status(422).json({ success: false, message: "Incorrect Password" });
             }
         } else {
             console.log(`DEBUG: User ${email} not found`)
