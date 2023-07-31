@@ -2,6 +2,7 @@ import Styled from 'styled-components';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import newAuth from '../../assets/images/newAuth.svg'
 
 function Auth({ setUser }) {
 	const [page, setPage] = useState('login');
@@ -108,7 +109,7 @@ function Auth({ setUser }) {
 		<Container>
 			<LeftContainer>
 				<Image
-					src="https://upcdn.io/W142hJk/raw/demo/4mKFMNnMAj.svg"
+					src={newAuth}
 					alt="Image"
 					loading="lazy"
 				/>
