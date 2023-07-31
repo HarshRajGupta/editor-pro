@@ -111,7 +111,6 @@ function Auth({ setUser }) {
 				<Image
 					src={newAuth}
 					alt="Image"
-					loading="lazy"
 				/>
 			</LeftContainer>
 			<Right>
