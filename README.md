@@ -62,24 +62,10 @@ cd editor-pro
 3. Install the dependencies for the backend.
 
 ```shell
-cd server
 npm install
 ```
 or
 ```shell
-cd server
-yarn
-```
-
-4. Install the dependencies for the frontend.
-
-```shell
-cd ../client
-npm install
-```
-or
-```shell
-cd ../client
 yarn
 ```
 
@@ -93,25 +79,13 @@ yarn
 
 To start the application, perform the following steps:
 
-1. In the `server` folder, start the backend server.
+1. In the `root` folder, start the backend server.
 
 ```shell
 npm start
 ```
 or
 ```shell
-yarn start
-```
-
-2. In a separate terminal window, navigate to the `client` folder and start the frontend development server.
-
-```shell
-cd ../client
-npm start
-```
-or
-```shell
-cd ../client
 yarn start
 ```
 
