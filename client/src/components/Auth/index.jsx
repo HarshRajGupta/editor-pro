@@ -1,5 +1,5 @@
 import New from './new';
-import Old from './old';
+// import Old from './old';
 
 const index = ({ setUser }) => {
 	// return <Old setUser={setUser} />;
