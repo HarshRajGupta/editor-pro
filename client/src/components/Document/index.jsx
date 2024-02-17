@@ -37,10 +37,8 @@ function File({ user, setUser }) {
 			}
 		});
 		socket.on('receive', (data) => {
-			if (data.source !== user.email) {
-				setLastChanged(0);
-				setData(data.data);
-			}
+			setLastChanged(0);
+			setData(data.data);
 		});
 		socket.on('user-joined', (user) => {
 			toast.success(`${user} joined...!`);
@@ -68,6 +66,7 @@ function File({ user, setUser }) {
 			socket.emit('receive-changes', {
 				data: data,
 				source: user?.email,
+				timestamp: Date.now(),
 			});
 			setLastChanged(0);
 		}
