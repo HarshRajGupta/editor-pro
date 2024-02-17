@@ -35,7 +35,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		};
 		try {
 			let response = await axios.request(options);
-			console.log('token', response);
+			// console.log('token', response);
 			while (
 				response.data.status.id === 1 ||
 				response.data.status.id === 2
@@ -45,7 +45,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 					des: 'Processing...',
 				});
 				response = await axios.request(options);
-				console.log('token', response);
+				// console.log('token', response);
 			}
 			let stdOut = null;
 			if (response.data?.stdout) stdOut = atob(response.data?.stdout);
@@ -85,7 +85,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 		};
 		try {
 			const response = await axios.request(options);
-			console.log('compile', response);
+			// console.log('compile', response);
 			await deCodeToken(response.data.token);
 			setSubmitting(false);
 		} catch (err) {

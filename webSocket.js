@@ -3,7 +3,7 @@ const Document = require("./models/document");
 
 const hashMap = new Map();
 
-function webSockets(socket) {
+const webSockets = (socket) => {
     console.log(`WS: User connected to ${socket.id}`)
     socket.on('request', async data => {
         console.log(`WS: request ${data.docId}`)

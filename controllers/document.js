@@ -4,7 +4,7 @@ const { invitationMail } = require("./mail")
 const createDocument = async (req, res) => {
     // console.log(`POST /api/document/create`)
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const { type, fileName, defaultCode } = req.body;
         const userEmail = req.body.userEmail.toLowerCase();
         if (!userEmail || !type) return res.status(400).json({ success: false, message: 'Bad Request' })
@@ -27,7 +27,7 @@ const createDocument = async (req, res) => {
 const getDocuments = async (req, res) => {
     // console.log(`POST /api/document/`)
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const userEmail = req.body.userEmail.toLowerCase();
         if (!userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
         const documents = await Document.find({ users: userEmail })
@@ -64,7 +64,7 @@ const getDocumentById = async (req, res) => {
 const addUser = async (req, res) => {
     // console.log("POST /api/document/invite");
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const id = req.body.id;
         const userEmail = req.body.userEmail.toLowerCase();
         const newEmail = req.body.newEmail.toLowerCase();
@@ -88,7 +88,7 @@ const addUser = async (req, res) => {
 const deleteDocument = async (req, res) => {
     // console.log("POST /api/document/delete");
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const { id } = req.body;
         const userEmail = req.body.userEmail.toLowerCase();
         if (!id || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request' })
@@ -110,7 +110,7 @@ const deleteDocument = async (req, res) => {
 const changeType = async (req, res) => {
     // console.log(`POST /api/document/type`)
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const { id, type } = req.body;
         if (!id || !type) return res.status(400).json({ success: false, message: 'Bad Request' })
         const document = await Document.findById(id)
@@ -129,7 +129,7 @@ const changeType = async (req, res) => {
 const openToAll = async (req, res) => {
     // console.log(`POST /api/document/open`)
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const { docId, status } = req.body;
         const userEmail = req.body.userEmail.toLowerCase();
         if (!docId || status === null || !userEmail) return res.status(400).json({ success: false, message: 'Bad Request', status: status, docId: docId, userEmail: userEmail })
