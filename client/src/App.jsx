@@ -20,8 +20,7 @@ function App() {
 				.then((res) => {
 					setUser({
 						userName: res?.data?.userName,
-						email: res?.data?.email,
-						id: res?.data?.id,
+						email: res?.data?.email
 					});
 					document.title = res.data?.userName || 'Editor-Pro';
 					toast.success(res.data.message);

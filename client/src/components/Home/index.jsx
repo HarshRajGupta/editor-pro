@@ -84,7 +84,7 @@ function Files({ user, setUser }) {
 		return (
 			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] max-[600px]:w-[92vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded md:my-2 mx-auto justify-around relative">
 				<div
-					className="w-full capitalize cursor-pointer h-fit text-sm md:text-base max-[600px]:text-[10px]"
+					className="w-fullcursor-pointer h-fit text-sm md:text-base max-[600px]:text-[10px]"
 					onClick={() => navigate(`/${file._id}`)}
 				>
 					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10 max-[600px]:text-[8px]">
@@ -96,7 +96,7 @@ function Files({ user, setUser }) {
 					{file?.type?.label}
 				</div>
 				<div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[8px]">
-					{file?.owner}
+					{file?.owner === user.email ? '' : file?.owner}
 				</div>
 				{file?.owner === user.email && (
 					<div className="absolute right-5">

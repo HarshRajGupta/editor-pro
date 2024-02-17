@@ -2,6 +2,7 @@ import Styled from 'styled-components';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 import newAuth from '../../assets/images/newAuth.svg';
 
 function Auth({ setUser }) {
@@ -111,14 +112,17 @@ function Auth({ setUser }) {
 	};
 	const loginAsGuest = async () => {
 		setLoading(true);
+		toast.info('Logging in as Guest');
 		try {
 			await axios
-				.post(`/api/auth/guest`)
+				.post(`/api/auth/guest`, {
+					email: uuidv4()
+				})
 				.then((res) => {
 					setLoading(false);
 					localStorage.setItem('token', res.data.token);	
-					toast.success(res.data.message);
-					document.title = res.data?.user?.userName || 'Editor-Pro';
+					document.title = 'Editor-Pro';
+					toast.warning('Please note that your data will be lost after you logout!');
 					return setUser(res.data?.user);
 				})
 				.catch((err) => {
@@ -273,10 +277,7 @@ function Auth({ setUser }) {
 						</Link>
 					)}
 					<Link>
-						<span onClick={() => {
-							console.log('Login as Guest');
-							loginAsGuest();
-						}}>Login as Guest</span>
+						<span onClick={loginAsGuest}>Login as Guest</span>
 					</Link>
 				</RightContainer>
 			</Right>
