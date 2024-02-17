@@ -5,7 +5,7 @@
 	"description": "A feature rich Text and Code Editor that combines document sharing, editing, and compilation capabilities",
 	"engines": {
 		"node": "20.10.0",
-		"npm": "10.4.0"
+		"npm": "10.2.3"
 	},
 	"main": "index.js",
 	"scripts": {
