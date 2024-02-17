@@ -25,7 +25,6 @@ const webSockets = async (socket) => {
                 })
                 return await socket.disconnect()
             }
-            console.log('WS', data)
             if (!document.openToAll && !document.users.find(email => email.toLowerCase() === data.userEmail.toLowerCase())) {
                 await socket.emit("response", {
                     success: false,
@@ -38,7 +37,6 @@ const webSockets = async (socket) => {
             if (hashMap.has(data.docId)) {
                 document.data = hashMap.get(data.docId).data;
             }
-            console.log("tt", document)
             await socket.emit("response", {
                 success: true,
                 message: 'Document fetched',

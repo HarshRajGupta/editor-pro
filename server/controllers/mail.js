@@ -21,14 +21,14 @@ const registrationMail = (email, name) => {
     try {
         mailTransporter.sendMail(mailDetails, function (err, data) {
             if (err) {
-                console.log(`ERROR: while sending mail to ${email}`);
+                console.log(`ERROR: while sending registration mail to ${email} in pipeline`);
                 console.error(err);
             } else {
                 console.log(`DEBUG: Mail sent to ${email}`);
             }
         });
     } catch (err) {
-        console.log(`ERROR: while sending mail to ${email}`);
+        console.log(`ERROR: while sending registration mail to ${email}`);
         console.error(err);
     }
 }
@@ -46,14 +46,14 @@ const invitationMail = (userMail, newEmail, owner, fileName, docId) => {
     try {
         mailTransporter.sendMail(mailDetails, function (err, data) {
             if (err) {
-                console.log(`ERROR: while sending mail to ${email}`);
+                console.log(`ERROR: while sending invitation mail to ${email} in pipeline`);
                 console.error(err);
             } else {
                 console.log(`DEBUG: Mail sent to ${email}`);
             }
         });
     } catch (err) {
-        console.log(`ERROR: while sending mail to ${email}`);
+        console.log(`ERROR: while sending invitation mail to ${email}`);
         console.error(err);
     }
 }
