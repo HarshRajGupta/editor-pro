@@ -8,13 +8,17 @@ function File({ user, setUser }) {
 	const navigate = useNavigate();
 	const [file, setFile] = useState(null);
 	const [data, setData] = useState();
-	const [lastChanged, setLastChanged] = useState(0);
+	const [lastChanged, setLastChanged] = useState(false);
 	const [openToAll, setOpenToAll] = useState(false);
 
 	useEffect(() => {
-		socket.connect();
+		setTimeout(() => {
+			socket.connect();
+		}, 0)
 		return () => {
-			socket.disconnect();
+			setTimeout(() => {
+				socket.disconnect();
+			}, 0)
 		};
 	}, []);
 
@@ -36,9 +40,11 @@ function File({ user, setUser }) {
 				navigate(`/`);
 			}
 		});
-		socket.on('receive', (data) => {
-			setLastChanged(0);
-			setData(data.data);
+		socket.on('receive', (value) => {
+			setTimeout(() => {
+				setData(value);
+				setLastChanged(false);
+			}, 0)
 		});
 		socket.on('user-joined', (user) => {
 			toast.success(`${user} joined...!`);
@@ -63,14 +69,15 @@ function File({ user, setUser }) {
 
 	useEffect(() => {
 		if (lastChanged) {
-			socket.emit('receive-changes', {
-				data: data,
-				source: user?.email,
-				timestamp: Date.now(),
-			});
-			setLastChanged(0);
+			setTimeout(() => {
+				socket.emit('receive-changes', {
+					data: data,
+					timestamp: Date.now(),
+				});
+				setLastChanged(false);
+			}, 0)
 		}
-	}, [lastChanged]);
+	}, [lastChanged, data]);
 
 	if (!file) return <Loader />;
 	return (

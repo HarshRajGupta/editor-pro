@@ -10,6 +10,7 @@ function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
 		localStorage.removeItem('token');
 		window.location.reload();
 	};
+	console.log(text)
 	return (
 		<>
 			{showMoodle && (
@@ -42,7 +43,7 @@ function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
 				</span>
 				<Editor
 					onKeyDown={(e) => {
-						setLastChanged(1);
+						setLastChanged(true);
 					}}
 					apiKey={process.env.REACT_APP_EDITOR_KEY}
 					onInit={(evt, editor) => {
@@ -56,7 +57,7 @@ function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
 					init={{
 						draggable_modal: true,
 						plugins:
-							'searchreplace autolink directionality visualblocks visualchars image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons print',
+							'searchreplace autolink directionality visualblocks visualchars image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons',
 						toolbar:
 							'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image addcomment showcomments  | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
 						height: '100vh',

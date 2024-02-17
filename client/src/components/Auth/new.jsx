@@ -2,7 +2,7 @@ import Styled from 'styled-components';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import newAuth from '../../assets/images/newAuth.svg'
+import newAuth from '../../assets/images/newAuth.svg';
 
 function Auth({ setUser }) {
 	const [page, setPage] = useState('login');
@@ -101,7 +101,42 @@ function Auth({ setUser }) {
 				});
 		} catch (err) {
 			setLoading(false);
-			toast.error(err.response?.data?.message);
+			if (!err.response) {
+				toast.error('Something went wrong!');
+			} else {
+				toast.error(err.response?.data?.message);
+			}
+			return console.error(err);
+		}
+	};
+	const loginAsGuest = async () => {
+		setLoading(true);
+		try {
+			await axios
+				.post(`/api/auth/guest`)
+				.then((res) => {
+					setLoading(false);
+					localStorage.setItem('token', res.data.token);	
+					toast.success(res.data.message);
+					document.title = res.data?.user?.userName || 'Editor-Pro';
+					return setUser(res.data?.user);
+				})
+				.catch((err) => {
+					setLoading(false);
+					if (!err.response) {
+						toast.error('Something went wrong!');
+					} else {
+						toast.error(err.response?.data?.message);
+					}
+					return console.error(err);
+				});
+		} catch (err) {
+			setLoading(false);
+			if (!err.response) {
+				toast.error('Something went wrong!');
+			} else {
+				toast.error(err.response?.data?.message);
+			}
 			return console.error(err);
 		}
 	};
@@ -191,7 +226,13 @@ function Auth({ setUser }) {
 							/>
 							<Suffix htmlFor="terms">
 								Agree to&nbsp;
-								<a target="__blank" href="https://docs.google.com/document/d/1C2TUPEbnozRSuMhp4Xur7H4Vy97LOaNOeZDxSKYmLG0/edit?usp=sharing">Terms and Conditions</a>&nbsp;
+								<a
+									target="__blank"
+									href="https://docs.google.com/document/d/1C2TUPEbnozRSuMhp4Xur7H4Vy97LOaNOeZDxSKYmLG0/edit?usp=sharing"
+								>
+									Terms and Conditions
+								</a>
+								&nbsp;
 							</Suffix>
 							{error.terms && (
 								<div className="error">{error.terms}</div>
@@ -231,6 +272,12 @@ function Auth({ setUser }) {
 							</span>
 						</Link>
 					)}
+					<Link>
+						<span onClick={() => {
+							console.log('Login as Guest');
+							loginAsGuest();
+						}}>Login as Guest</span>
+					</Link>
 				</RightContainer>
 			</Right>
 		</Container>

@@ -8,7 +8,7 @@ function Markdown({ code, setCode, setLastChanged }) {
                 onChange={setCode}
                 className='w-full h-fullscreen'
                 onKeyDown={() => {
-                    setLastChanged(1)
+                    setLastChanged(true)
                 }}
             />
         </div>
