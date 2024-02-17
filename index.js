@@ -48,7 +48,7 @@ const start = async () => {
 		await connectDB();
 		server.listen(port, async () => {
 			console.log(`DEBUG: Server listening on http://localhost:${port}`)
-			setInterval(await saveDocuments, 60000);
+			setInterval(saveDocuments, 600000);
 		});
 	} catch (error) {
 		console.log(`ERROR: while starting server`)
