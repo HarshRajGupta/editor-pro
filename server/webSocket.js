@@ -3,7 +3,7 @@ const Document = require("./models/document");
 
 const hashMap = new Map();
 
-function webSockets(socket) {
+const webSockets = (socket) => {
     console.log(`WS: User connected to ${socket.id}`)
     socket.on('request', async data => {
         console.log(`WS: request ${data.docId}`)
@@ -38,7 +38,7 @@ function webSockets(socket) {
             socket.broadcast.to(data.docId).emit("user-joined", data.userEmail)
             console.log(`WS: ${data.userEmail} joined ${data.docId}`)
             if (hashMap.has(data.docId)) {
-                document.data = hashMap.get(data.docId);
+                document.data = hashMap.get(data.docId).data;
             }
             socket.emit("response", {
                 success: true,
@@ -48,9 +48,16 @@ function webSockets(socket) {
             socket.join(data.docId);
             socket.on("receive-changes", delta => {
                 try {
-                    hashMap.set(data.docId, delta.data);
-                    console.log(`WS: ${data.userEmail} updated ${data.docId}`)
-                    socket.broadcast.to(data.docId).emit("receive", delta)
+                    console.log(`WS: ${data.userEmail} updated ${data.docId} at ${delta.timestamp}`)
+                    if (!hashMap.has(data.docId) || hashMap.get(data.docId).timestamp < delta.timestamp) {
+                        hashMap.set(data.docId, {
+                            data: delta.data,
+                            timestamp: delta.timestamp
+                        });
+                        socket.broadcast.to(data.docId).emit("receive", {
+                            data: delta.data
+                        })
+                    }
                 } catch (e) {
                     console.log(`WS: error while receiving ${data.docId}`)
                     console.error(e)
