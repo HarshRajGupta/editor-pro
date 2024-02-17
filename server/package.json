@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "A feature rich Text and Code Editor that combines document sharing, editing, and compilation capabilities",
 	"engines": {
-		"node": "v20.10.0",
+		"node": "20.10.0",
 		"npm": "10.4.0"
 	},
 	"main": "index.js",
