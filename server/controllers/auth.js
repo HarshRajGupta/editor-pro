@@ -110,10 +110,10 @@ const verifyToken = (req, res) => {
                     console.log(`DEBUG: User not found`)
                     return res.status(404).json({ success: false, message: "User not found" });
                 }
-                const { userName, email, _id } = user;
+                const { userName, email } = user;
                 console.log(`DEBUG: User ${email} verified`)
                 return res.status(200).json({
-                    success: true, userName: userName, email: email, id: _id, message: `Welcome ${userName}!`
+                    success: true, userName: userName, email: email, message: `Welcome ${userName}!`
                 });
             });
         } else {
@@ -130,8 +130,43 @@ const verifyToken = (req, res) => {
     }
 }
 
+const guestLogin = async (req, res) => {
+    // console.log('POST /api/auth/guest');
+    try {
+        const guest = await User.create({
+            email: req.body.email.toLowerCase()
+        });
+        console.log(`DEBUG: Guest user created`)
+        jwt.sign(
+            {
+                email: guest.email,
+                id: guest._id,
+            },
+            process.env.JWT_SECRET,
+            (err, token) => {
+                if (err) throw err;
+                console.log(`DEBUG: Guest user logged in`)
+                return res.status(200).json({
+                    success: true,
+                    message: "Welcome",
+                    user: {
+                        userName: "anonymous",
+                        email: 'guest'
+                    },
+                    token: token
+                });
+            }
+        );
+    } catch (err) {
+        console.log(`Error: Guest logging in`);
+        console.error(err)
+        return res.status(400).json({ success: false, message: "Bad request", error: err });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
-    verifyToken
+    verifyToken,
+    guestLogin
 }

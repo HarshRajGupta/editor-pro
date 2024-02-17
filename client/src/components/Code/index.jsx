@@ -104,7 +104,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
 					theme={'vs-dark'}
 					defaultValue={code}
 					onChange={(e) => {
-						setLastChanged(1);
+						setLastChanged(true);
 						setCode(e);
 					}}
 					className="w-full sm:max-w-[70vw] max-[600px]:max-h-[70vh]"
