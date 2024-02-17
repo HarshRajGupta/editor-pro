@@ -62,30 +62,28 @@ cd editor-pro
 3. Install the dependencies for the backend.
 
 ```shell
-cd server
 npm install
 ```
 or
 ```shell
-cd server
 yarn
 ```
 
 4. Install the dependencies for the frontend.
 
 ```shell
-cd ../client
+cd client
 npm install
 ```
 or
 ```shell
-cd ../client
+cd client
 yarn
 ```
 
 ### Configuration
 
-1. In the `server` folder, create a `.env` file based on the provided `.env.sample` file. Configure any necessary environment variables specific to the server, including the MongoDB connection details and email server credentials.
+1. In the root folder, create a `.env` file based on the provided `.env.sample` file. Configure any necessary environment variables specific to the server, including the MongoDB connection details and email server credentials.
 
 2. In the `client` folder, create a `.env` file based on the provided `.env.sample` file. Configure any necessary environment variables specific to the client.
 
@@ -93,7 +91,7 @@ yarn
 
 To start the application, perform the following steps:
 
-1. In the `server` folder, start the backend server.
+1. Start the backend server.
 
 ```shell
 npm start
@@ -103,19 +101,35 @@ or
 yarn start
 ```
 
-2. In a separate terminal window, navigate to the `client` folder and start the frontend development server.
+2. The web interface will be accessible at [http://localhost:4000](http://localhost:4000) in your web browser.
+
+### Starting the Application (for development)
+
+To start the application, perform the following steps:
+
+1. Start the backend server.
 
 ```shell
-cd ../client
+npm run dev
+```
+or
+```shell
+yarn dev
+```
+
+1. In a separate terminal window, navigate to the client folder and start the frontend development server.
+
+```shell
+cd client
 npm start
 ```
 or
 ```shell
-cd ../client
+cd client
 yarn start
 ```
 
-3. The frontend application will be accessible at [http://localhost:3000](http://localhost:3000) in your web browser.
+2. The web interface will be accessible at [http://localhost:4000](http://localhost:4000) in your web browser.
 
 ## Acknowledgments
 

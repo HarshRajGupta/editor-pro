@@ -12,20 +12,20 @@ function Loader() {
 				<g
 					fill="none"
 					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="1"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth="1"
 				>
 					<g transform="translate(9.5,19)">
 						<circle
 							className="bike__tire"
 							r="9"
-							stroke-dasharray="56.549 56.549"
+							strokeDasharray="56.549 56.549"
 						/>
 						<g
 							className="bike__spokes-spin"
-							stroke-dasharray="31.416 31.416"
-							stroke-dashoffset="-23.562"
+							strokeDasharray="31.416 31.416"
+							strokeDashoffset="-23.562"
 						>
 							<circle
 								className="bike__spokes"
@@ -41,8 +41,8 @@ function Loader() {
 					<g transform="translate(24,19)">
 						<g
 							className="bike__pedals-spin"
-							stroke-dasharray="25.133 25.133"
-							stroke-dashoffset="-21.991"
+							strokeDasharray="25.133 25.133"
+							strokeDashoffset="-21.991"
 							transform="rotate(67.5,0,0)"
 						>
 							<circle
@@ -60,12 +60,12 @@ function Loader() {
 						<circle
 							className="bike__tire"
 							r="9"
-							stroke-dasharray="56.549 56.549"
+							strokeDasharray="56.549 56.549"
 						/>
 						<g
 							className="bike__spokes-spin"
-							stroke-dasharray="31.416 31.416"
-							stroke-dashoffset="-23.562"
+							strokeDasharray="31.416 31.416"
+							strokeDashoffset="-23.562"
 						>
 							<circle
 								className="bike__spokes"
@@ -81,22 +81,22 @@ function Loader() {
 					<polyline
 						className="bike__seat"
 						points="14 3,18 3"
-						stroke-dasharray="5 5"
+						strokeDasharray="5 5"
 					/>
 					<polyline
 						className="bike__body"
 						points="16 3,24 19,9.5 19,18 8,34 7,24 19"
-						stroke-dasharray="79 79"
+						strokeDasharray="79 79"
 					/>
 					<path
 						className="bike__handlebars"
 						d="m30,2h6s1,0,1,1-1,1-1,1"
-						stroke-dasharray="10 10"
+						strokeDasharray="10 10"
 					/>
 					<polyline
 						className="bike__front"
 						points="32.5 2,38.5 19"
-						stroke-dasharray="19 19"
+						strokeDasharray="19 19"
 					/>
 				</g>
 			</svg>

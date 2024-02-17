@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Auth, Home, Document, Loader } from './components';
 
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
 function App() {
 	const [loading, setLoading] = useState(true);
