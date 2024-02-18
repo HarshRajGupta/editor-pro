@@ -11,7 +11,6 @@
   "scripts": {
     "dev": "clear && nodemon start",
     "start": "node index.js",
-    "lint": "eslint .",
     "format": "prettier --write .",
     "build": "cd client && npm run build && cd .. && rm -rf view && mkdir view && mv client/build/* view"
   },
