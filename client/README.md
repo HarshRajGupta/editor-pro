@@ -49,7 +49,9 @@ cd editor-pro
 cd client
 npm install
 ```
+
 or
+
 ```shell
 cd client
 yarn
@@ -61,7 +63,9 @@ yarn
 cd ../server
 npm install
 ```
+
 or
+
 ```shell
 cd ../server
 yarn
@@ -82,7 +86,9 @@ To start the application, perform the following steps:
 ```shell
 npm start
 ```
+
 or
+
 ```shell
 yarn start
 ```
@@ -95,7 +101,9 @@ yarn start
 cd ../server
 npm start
 ```
+
 or
+
 ```shell
 cd ../server
 yarn start

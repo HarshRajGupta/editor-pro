@@ -1,7 +1,7 @@
-import Styled from 'styled-components';
-import { useRef, useState } from 'react';
 import axios from 'axios';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import Styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import newAuth from '../../assets/images/newAuth.svg';
 
@@ -116,32 +116,25 @@ function Auth({ setUser }) {
 		try {
 			await axios
 				.post(`/api/auth/guest`, {
-					email: uuidv4()
+					email: uuidv4(),
 				})
 				.then((res) => {
 					setLoading(false);
-					localStorage.setItem('token', res.data.token);	
+					localStorage.setItem('token', res.data.token);
 					document.title = 'Editor-Pro';
-					toast.warning('Please note that your data will be lost after you logout!');
-					return setUser(res.data?.user);
+					toast.warning(
+						'Please note that your data will be lost after you logout!',
+					);
+					setUser(res.data?.user);
 				})
 				.catch((err) => {
-					setLoading(false);
-					if (!err.response) {
-						toast.error('Something went wrong!');
-					} else {
-						toast.error(err.response?.data?.message);
-					}
-					return console.error(err);
+					console.error(err);
+					toast.error('Something went wrong!');
 				});
 		} catch (err) {
+			toast.error('Something went wrong!');
+		} finally {
 			setLoading(false);
-			if (!err.response) {
-				toast.error('Something went wrong!');
-			} else {
-				toast.error(err.response?.data?.message);
-			}
-			return console.error(err);
 		}
 	};
 	return (
