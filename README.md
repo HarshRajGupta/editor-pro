@@ -1,4 +1,5 @@
 # Editor-Pro
+
 This project is a web application that combines Express.js/Node.js on the backend and React on the frontend, utilizing several libraries for enhanced functionality. It integrates Socket.IO for real-time communication, MongoDB for data storage, Nodemailer for email functionality, and leverages Tailwind CSS and Sass for styling.
 
 ## Live Site
@@ -9,9 +10,9 @@ For a live demonstration of the project, you can visit the [Editor-Pro Live Site
 
 To test the application's functionality, you can use the following testing credentials:
 
-Email: ```test@mail.com```
+Email: `test@mail.com`
 
-Password: ```12345678```
+Password: `12345678`
 
 Please note that these credentials are only for testing purposes and should not be used for personal purposes and user itself will be responsible for any kind of data loss or leak.
 
@@ -30,7 +31,6 @@ Please note that these credentials are only for testing purposes and should not 
 6. Only the original creator of a file can make the document open to all or restrict access, as well as delete the document.
 
 7. For compilation, fill in the input in the custom input box and press the "Compile" button. You can also change the programming language if needed. The output will be displayed in the output box on the right side.![](https://github.com/HarshRajGupta/editor-pro/assets/85221003/d6fbb7c8-f667-4209-ac4f-7ff42809a6d1)
-
 
 Please note that these usage instructions are a general guide, and the actual features and functionalities may vary based on the specific implementation of the application.
 
@@ -64,7 +64,9 @@ cd editor-pro
 ```shell
 npm install
 ```
+
 or
+
 ```shell
 yarn
 ```
@@ -75,7 +77,9 @@ yarn
 cd client
 npm install
 ```
+
 or
+
 ```shell
 cd client
 yarn
@@ -96,7 +100,9 @@ To start the application, perform the following steps:
 ```shell
 npm start
 ```
+
 or
+
 ```shell
 yarn start
 ```
@@ -112,7 +118,9 @@ To start the application, perform the following steps:
 ```shell
 npm run dev
 ```
+
 or
+
 ```shell
 yarn dev
 ```
@@ -123,7 +131,9 @@ yarn dev
 cd client
 npm start
 ```
+
 or
+
 ```shell
 cd client
 yarn start
