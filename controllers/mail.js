@@ -64,8 +64,7 @@ const invitationMail = (userMail, newEmail, owner, fileName, docId) => {
 };
 
 const serverRestart = () => {
-  console.log(`DEBUG: Server Restart Mail at ${new Date().toLocaleString()}`);
-  const subject = `Server Restart Completed on Editor-Pro at ${new Date().toLocaleString()}`;
+  const subject = `Server Restart Completed on Editor-Pro at ${new Date().toLocaleString()} from ${process.env.NODE_ENV} Environment`;
   const text = `Dear Harsh,\n\nThis email is to inform you that a planned server restart for Editor-Pro was successfully completed at ${Date()}.\n\nCurrent status:\n\tThe server is now back online and operational.\n\tAll services are running normally.\n\tAny data saved on the server before the restart should be intact.\n\nWhat to do now:\n\tYou can resume your normal use of the server and its services.\n\nThank you for your understanding and cooperation during this server maintenance.\n\n--\nSincerely,\nEditor-Pro`;
   const mailDetails = {
     from: process.env.MAIL,
