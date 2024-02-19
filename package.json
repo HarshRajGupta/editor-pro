@@ -2,49 +2,55 @@
   "name": "editor-pro",
   "version": "0.2.0",
   "private": true,
-  "description": "A feature rich Text and Code Editor that combines document sharing, editing, and compilation capabilities",
-  "engines": {
-    "node": "20.10.0",
-    "npm": "10.4.0"
-  },
-  "main": "index.js",
-  "scripts": {
-    "dev": "clear && nodemon start",
-    "start": "node index.js",
-    "format": "prettier --write .",
-    "build": "cd client && npm run build && cd .. && rm -rf view && mkdir view && mv client/build/* view"
-  },
-  "keywords": [
-    "code",
-    "code-editor",
-    "compiler",
-    "live-sharing",
-    "web-sockets"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "github.com/HarshRajGupta/editor-pro.git"
-  },
-  "bugs": {
-    "url": "https://github.com/HarshRajGupta/editor-pro/issues"
-  },
-  "homepage": "https://editor-pro.onrender.com",
-  "author": "HarshRajGupta",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.4",
-    "express": "^4.18.2",
-    "http": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.1.3",
-    "morgan": "^1.10.0",
-    "nodemailer": "^6.9.9",
-    "socket.io": "^4.7.4"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@monaco-editor/react": "^4.5.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@tinymce/tinymce-react": "^4.3.0",
+    "@uiw/react-md-editor": "^3.23.3",
+    "axios": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-refresh": "^0.14.0",
+    "react-router-dom": "^6.22.1",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.7.3",
+    "react-toastify": "^9.1.3",
+    "sass": "^1.63.3",
+    "socket.io-client": "^4.6.2",
+    "styled-components": "^6.0.3",
+    "uuid": "^9.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "cd server && npm i && npm run server",
+    "dev": "concurrently \"npm start\" \"npm run server\""
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "nodemon": "^3.0.3",
-    "prettier": "^3.2.5"
+    "concurrently": "^8.2.2",
+    "tailwindcss": "^3.3.2"
   }
 }
