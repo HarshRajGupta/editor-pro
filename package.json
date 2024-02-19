@@ -9,10 +9,11 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "clear && nodemon start",
-    "start": "node index.js",
+    "dev": "nodemon start",
+    "start": "clear && node index.js",
     "format": "prettier --write .",
-    "build": "cd client && npm run build && cd .. && rm -rf view && mkdir view && mv client/build/* view"
+    "build": "cd client && npm run build && cd .. && rm -rf view && mkdir view && mv client/build/* view",
+    "server": "nodemon start"
   },
   "keywords": [
     "code",
@@ -44,6 +45,7 @@
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "nodemon": "^3.0.3",
     "prettier": "^3.2.5"
   }
