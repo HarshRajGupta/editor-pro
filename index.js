@@ -10,6 +10,8 @@ const connectDB = require("./database");
 const ApiRouter = require("./routes");
 const { webSockets, saveDocuments } = require("./webSocket");
 
+const { serverRestart } = require("./controllers/mail");
+
 const app = express();
 
 app.use(
@@ -50,6 +52,7 @@ const start = async () => {
     server.listen(port, async () => {
       console.log(`DEBUG: Server listening on http://localhost:${port}`);
       setInterval(saveDocuments, 10 * 60 * 1000);
+      serverRestart();
     });
   } catch (error) {
     console.log(`ERROR: while starting server`);
