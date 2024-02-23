@@ -39,6 +39,7 @@ const webSockets = async (socket) => {
       await socket.join(data.docId);
       await socket.on("receive-changes", async (delta) => {
         try {
+          console.log(`WS: Changes from ${data.userEmail} received`);
           if (
             !hashMap.has(data.docId) ||
             hashMap.get(data.docId).timestamp < delta.timestamp
@@ -48,6 +49,7 @@ const webSockets = async (socket) => {
               timestamp: delta.timestamp,
             });
             await socket.to(data.docId).emitWithAck("receive", delta.data);
+            console.log(`WS: Changes from ${data.userEmail} saved`);
           }
         } catch (error) {
           throw error;
