@@ -47,6 +47,7 @@ function File({ user, setUser }) {
       setTimeout(() => {
         setLastChanged(false);
         setData(value);
+        console.info("Received Changes...!");
       }, 0);
     });
     socket.on("user-joined", (user) => {
@@ -95,6 +96,7 @@ function File({ user, setUser }) {
           data: data,
           timestamp: Date.now(),
         });
+        console.info("Emitting Changes...!");
       }, 0);
     }
   }, [lastChanged, data]);
