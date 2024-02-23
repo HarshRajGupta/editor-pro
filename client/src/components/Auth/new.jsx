@@ -125,6 +125,7 @@ function Auth({ setUser }) {
           toast.warning(
             "Please note that your data will be lost after you logout!",
           );
+          localStorage.setItem("userEmail", res?.data?.user?.email);
           return setUser(res.data?.user);
         })
         .catch((err) => {

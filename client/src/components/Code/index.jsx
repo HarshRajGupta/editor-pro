@@ -106,7 +106,6 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
           }}
           className="w-full sm:max-w-[70vw] max-[600px]:max-h-[70vh]"
           value={code}
-          options={{ readOnly: true }}
         />
       </div>
       <div className="px-8 w-[30vw] overflow-y-auto max-[600px]:w-full">
