@@ -29,7 +29,7 @@ const webSockets = async (socket) => {
       if (!data.docId || !mongoose.Types.ObjectId.isValid(data.docId))
         throw "Invalid document id";
       const document = await getDoc(data);
-      await socket.to(data.docId).except(socket.id).emit("user-joined", data.userEmail);
+      await socket.to(data.docId).emit("user-joined", data.userEmail);
       if (hashMap.has(data.docId)) document.data = hashMap.get(data.docId).data;
       await socket.emit("response", {
         success: true,
@@ -48,7 +48,7 @@ const webSockets = async (socket) => {
               data: delta.data,
               timestamp: delta.timestamp,
             });
-            await socket.to(data.docId).except(socket.id).emit("receive", delta.data);
+            await socket.to(data.docId).emit("receive", delta);
             console.log(`WS: Changes from ${data.userEmail} saved`);
           }
         } catch (error) {
@@ -56,7 +56,7 @@ const webSockets = async (socket) => {
         }
       });
       await socket.on("disconnect", async () => {
-        await socket.to(data.docId).except(socket.id).emit("user-left", data.userEmail);
+        await socket.to(data.docId).emit("user-left", data.userEmail);
         return await socket.disconnect();
       });
     } catch (e) {
