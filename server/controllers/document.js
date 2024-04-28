@@ -1,11 +1,13 @@
 const { User, Document, Connection } = require("../models");
 const { invitationMail } = require("./mail");
-const { pg } = require("../config");
+const { pg, pick } = require("../config");
 require("dotenv").config();
 const sources = JSON.parse(process.env.SOURCES || "[]");
 
 const getById = async (req, res) => {
-    return res.status(200).json({ success: true, message: "Document fetched", document: req.document });
+    return res.status(200).json(
+        { success: true, message: "Document fetched", document: pick(req.document, ['id', 'name', 'type', 'ownerId', 'status', 'source']) }
+    );
 }
 
 const create = async (req, res) => {
@@ -25,7 +27,7 @@ const create = async (req, res) => {
                 { transaction: t }
             );
             return res.status(200).json(
-                { success: true, message: "Document created", document: newDocument }
+                { success: true, message: "Document created", document: pick(newDocument, ['id', 'name', 'type', 'ownerId', 'status', 'source']) }
             );
         })
     } catch (e) {
@@ -39,7 +41,7 @@ const create = async (req, res) => {
 const get = async (req, res) => {
     try {
         const user = req.user;
-        const documents = await user.getDocuments();
+        const documents = await user.getDocuments({ attributes: ['id', 'name', 'type', 'ownerId', 'status', 'source'] });
         return res.status(200).json(
             { success: true, message: "Documents fetched", documents: documents }
         );
@@ -129,7 +131,7 @@ const updateStatus = async (req, res) => {
             { status }
         );
         return res.status(200).json(
-            { success: true, message: "Document openToAll changed" }
+            { success: true, message: "Document status changed" }
         );
     } catch (e) {
         console.error("ERROR: while changing document openToAll", e);

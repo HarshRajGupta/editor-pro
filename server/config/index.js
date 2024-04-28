@@ -8,4 +8,6 @@ const sequelize = new Sequelize(process.env.DB_URI);
         .catch((error) => console.error("Unable to connect to the database:", error))
 )()
 
-module.exports = { pg: sequelize };
+const pick = (obj, keys) => keys.reduce((o, k) => ({ ...o, [k]: obj[k] }), {});
+
+module.exports = { pg: sequelize, pick };

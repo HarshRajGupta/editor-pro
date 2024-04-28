@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const { registrationMail } = require("./mail");
-const { pg } = require("../config");
+const { pg, pick } = require("../config");
 
 const register = async (req, res) => {
     try {
@@ -40,7 +40,7 @@ const register = async (req, res) => {
                 (err, token) => {
                     if (err) throw err;
                     return res.status(200).json(
-                        { success: true, message: "Registration Successful", user: user, token: token }
+                        { success: true, message: "Registration Successful", user: pick(user, ['id', 'name', 'email']), token: token }
                     );
                 },
             );
@@ -67,7 +67,7 @@ const login = async (req, res) => {
                     (err, token) => {
                         if (err) throw err;
                         return res.status(200).json(
-                            { success: true, message: "Logged in Successfully", user: user, token: token }
+                            { success: true, message: "Logged in Successfully", user: pick(user, ['id', 'name', 'email']), token: token }
                         );
                     },
                 );
@@ -89,7 +89,7 @@ const verify = async (req, res) => {
     try {
         const user = req.user
         res.status(200).json(
-            { success: true, message: `Welcome ${user.name}`, user }
+            { success: true, message: `Welcome ${user.name}`, user: pick(user, ['id', 'name', 'email']) }
         );
     } catch (err) {
         console.error("DEBUG: Error while verifying token", err);
@@ -112,7 +112,7 @@ const guest = async (req, res) => {
                     { secure: true, httpOnly: true }
                 );
                 return res.status(200).json(
-                    { success: true, message: "Guest Logged in Successfully", user: user, token: token }
+                    { success: true, message: "Guest Logged in Successfully", user: pick(user, ['id', 'name', 'email']), token: token }
                 );
             },
         );
