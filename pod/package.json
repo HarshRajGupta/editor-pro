@@ -1,0 +1,30 @@
+{
+  "name": "pod",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshrajgupta/editor-pro.git"
+  },
+  "author": "HarshRajGupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harshrajgupta/editor-pro/issues"
+  },
+  "homepage": "https://github.com/harshrajgupta/editor-pro#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "http": "^0.0.1-security",
+    "mongoose": "^8.3.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

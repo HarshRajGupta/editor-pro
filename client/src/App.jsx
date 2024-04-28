@@ -1,83 +1,86 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Auth, Document, Home, Loader } from "./components";
-
-axios.defaults.baseURL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Auth, Config, Home, Loader } from './components';
+import { UserContext } from './context';
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const checkLogin = async () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .post("/api/auth", {
-          token: token,
-        })
-        .then((res) => {
-          setUser({
-            userName: res?.data?.userName,
-            email: res?.data?.email,
-          });
-          localStorage.setItem("userEmail", res?.data?.email);
-          document.title = res.data?.userName || "Editor-Pro";
-          toast.success(res.data.message);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          localStorage.removeItem("token");
-          toast.error(err.response?.data?.message);
-          toast.error("Please login again");
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-      toast.warning("Please Login");
-    }
-  };
-  useEffect(() => {
-    checkLogin();
-  }, []);
-  return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          {!user ? (
-            <Auth setUser={setUser} />
-          ) : (
-            <BrowserRouter>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Home user={user} setUser={setUser} />
-                    </>
-                  }
-                />
-                <Route
-                  path="/:id"
-                  element={
-                    <>
-                      <Document user={user} setUser={setUser} />
-                    </>
-                  }
-                />
-              </Routes>
-            </BrowserRouter>
-          )}
-        </>
-      )}
-      <ToastContainer />
-    </>
-  );
+	const [loading, setLoading] = useState(true);
+	const [user, setUser] = useState(null);
+
+	useEffect(() => {
+		const checkLogin = async () => {
+			const token = localStorage.getItem('token');
+			if (token) {
+				await axios.get('/api/auth', {
+						headers: {
+							authorization: token,
+						},
+					})
+					.then((res) => {
+						setUser({
+							name: res?.data?.name,
+							email: res?.data?.email,
+						});
+						axios.defaults.headers.common['authorization'] = token;
+						document.title = res.data?.name || 'Editor-Pro';
+						toast.success(res.data.message);
+						setLoading(false);
+					})
+					.catch((err) => {
+						console.error(err);
+						localStorage.removeItem('token');
+						toast.error(err.response?.data?.message);
+						toast.error('Please login again');
+					});
+			} else {
+				toast.warning('Please Login');
+			}
+			setLoading(false);
+		};
+		checkLogin();
+	}, []);
+
+	return (
+		<>
+			{loading ? (
+				<Loader />
+			) : (
+				<UserContext.Provider
+					value={{
+						user,
+						setUser,
+					}}
+				>
+					{!user ? (
+						<Auth />
+					) : (
+						<>
+							<BrowserRouter>
+								<Routes>
+									<Route
+										path="/"
+										element={<Home />}
+									/>
+									<Route
+										path="/:id"
+										element={
+											<>
+												<Config />
+											</>
+										}
+									/>
+								</Routes>
+							</BrowserRouter>
+						</>
+					)}
+				</UserContext.Provider>
+			)}
+			<ToastContainer />
+		</>
+	);
 }
 
 export default App;

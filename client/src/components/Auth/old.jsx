@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
 import axios from "axios";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 function Auth({ setUser }) {
@@ -19,7 +19,7 @@ function Auth({ setUser }) {
       password: passwordRef.current?.value,
     };
     if (page === "register") {
-      user.userName = nameRef.current?.value;
+      user.name = nameRef.current?.value;
     }
     try {
       await axios
@@ -28,7 +28,7 @@ function Auth({ setUser }) {
           setLoading(false);
           localStorage.setItem("token", res.data.token);
           toast.success(res.data.message);
-          document.title = res.data?.user?.userName || "Editor-Pro";
+          document.title = res.data?.user?.name || "Editor-Pro";
           return setUser(res.data?.user);
         })
         .catch((err) => {
@@ -60,7 +60,7 @@ function Auth({ setUser }) {
                 <input
                   className="input100"
                   type="text"
-                  name="userName"
+                  name="name"
                   autocomplete={`off`}
                   ref={nameRef}
                   disabled={loading}

@@ -1,9 +1,9 @@
 import New from "./new";
 // import Old from './old';
 
-const index = ({ setUser }) => {
-  // return <Old setUser={setUser} />;
-  return <New setUser={setUser} />;
+const index = () => {
+  // return <Old />;
+  return <New />;
 };
 
 export default index;

@@ -1,0 +1,49 @@
+{
+  "name": "editor-pro",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A feature rich Text and Code Editor that combines document sharing, editing, and compilation capabilities",
+  "engines": {
+    "node": "20.10.0",
+    "npm": "10.4.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon start",
+    "start": "clear && node server.js",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "code",
+    "code-editor",
+    "compiler",
+    "live-sharing",
+    "web-sockets"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github.com/HarshRajGupta/editor-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HarshRajGupta/editor-pro/issues"
+  },
+  "homepage": "https://editor-pro.onrender.com",
+  "author": "HarshRajGupta",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.9",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.5"
+  }
+}

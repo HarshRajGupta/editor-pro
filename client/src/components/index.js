@@ -8,6 +8,7 @@ import Error from "./Others/Error";
 import Header from "./Others/Header";
 import Loader from "./Others/Loader";
 import Moodle from "./Others/Moodle";
+import Config from "./Config";
 
 export {
   Auth,
@@ -20,4 +21,5 @@ export {
   Loader,
   Doc,
   Moodle,
+  Config
 };

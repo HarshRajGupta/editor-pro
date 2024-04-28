@@ -1,16 +1,17 @@
-import { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useContext, useRef, useState } from "react";
 import { Loader, Moodle } from "../";
+import { UserContext } from "../../context";
 
-function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
+function Doc({ text, setText, setLastChanged }) {
   const editorRef = useRef(null);
+  const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [showMoodle, setShowMoodle] = useState(false);
   const logOut = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    setUser(null)
   };
-  console.log(text);
   return (
     <>
       {showMoodle && (
@@ -18,8 +19,6 @@ function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
           setShowMoodle={setShowMoodle}
           docId={window.location.pathname.split("/")[1]}
           user={user}
-          openToAll={openToAll}
-          setOpenToAll={setOpenToAll}
         />
       )}
       <div className={loading ? "hidden" : "z-0"}>
@@ -39,7 +38,7 @@ function Doc({ user, text, setText, setLastChanged, openToAll, setOpenToAll }) {
           </span>
         </span>
         <Editor
-          onKeyDown={(e) => {
+          onKeyDown={() => {
             setLastChanged(true);
           }}
           apiKey={process.env.REACT_APP_EDITOR_KEY}

@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
 import Editor from "@monaco-editor/react";
-import Select from "react-select";
-import Terminal from "./Terminal";
 import axios from "axios";
-import { Languages } from "../../assets";
+import { useRef, useState } from "react";
+import Select from "react-select";
 import { toast } from "react-toastify";
+import { Languages } from "../../assets";
+import Terminal from "./Terminal";
 
 function Code({ code, setCode, defaultLanguage, setLastChanged }) {
   const inputRef = useRef(null);
@@ -14,8 +14,7 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
   const handleLanguageChange = async (value) => {
     setLanguage(value);
     try {
-      await axios.post("/api/document/type", {
-        id: window.location.pathname.split("/")[1],
+      await axios.put(`/api/document/${window.location.pathname.split("/")[1]}/type`, {
         type: value,
       });
     } catch (err) {
@@ -35,14 +34,12 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
     };
     try {
       let response = await axios.request(options);
-      // console.log('token', response);
       while (response.data.status.id === 1 || response.data.status.id === 2) {
         setOutput({
           status: response.data.status.id,
           des: "Processing...",
         });
         response = await axios.request(options);
-        // console.log('token', response);
       }
       let stdOut = null;
       if (response.data?.stdout) stdOut = atob(response.data?.stdout);
@@ -82,7 +79,6 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
     };
     try {
       const response = await axios.request(options);
-      // console.log('compile', response);
       await deCodeToken(response.data.token);
       setSubmitting(false);
     } catch (err) {
