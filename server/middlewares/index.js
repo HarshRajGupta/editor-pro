@@ -2,34 +2,50 @@ const { User, Document } = require("../models");
 const jwt = require("jsonwebtoken");
 
 const authHandler = async (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) return res.status(403).json({ success: false, message: "Please login" });
-    return await jwt.verify(token, process.env.JWT_SECRET, async (err, userdata) => {
-        if (err) {
-            console.error(err)
-            return res.status(403).json({ success: false, error: `Invalid Token`, message: err });
-        }
-        const user = await User.findByPk(userdata.id);
-        if (!user) return res.status(404).json({ success: false, message: "User not found" });
-        req.user = user;
-        return next();
-    });
+    try {
+        const token = req.headers.authorization;
+        if (!token) return res.status(403).json({ success: false, message: "Please login" });
+        return await jwt.verify(token, process.env.JWT_SECRET, async (err, userdata) => {
+            if (err) {
+                console.error(err)
+                return res.status(403).json({ success: false, error: `Invalid Token`, message: err });
+            }
+            const user = await User.findByPk(userdata.id);
+            if (!user) return res.status(404).json({ success: false, message: "User not found" });
+            req.user = user;
+            return next();
+        });
+    } catch (e) {
+        console.error("ERROR: while authenticating user", e);
+        return res.status(400).json({
+            success: false,
+            message: "Invalid Session!! Please login again",
+        });
+    }
 }
 
 const guestHandler = async (req, _, next) => {
-    const { guestId } = req.cookies;
-    if (!guestId) return next();
-    jwt.verify(guestId, process.env.JWT_SECRET, async (err, userdata) => {
-        if (err) {
-            console.error(err)
-            req.cookies.guestId = null;
+    try {
+        const { guestId } = req.cookies;
+        if (!guestId) return next();
+        jwt.verify(guestId, process.env.JWT_SECRET, async (err, userdata) => {
+            if (err) {
+                console.error(err)
+                req.cookies.guestId = null;
+                return next();
+            }
+            const user = await User.findByPk(userdata.id);
+            if (!user) return next();
+            req.user = user;
             return next();
-        }
-        const user = await User.findByPk(userdata.id);
-        if (!user) return next();
-        req.user = user;
-        return next();
-    });
+        });
+    } catch (e) {
+        console.error("ERROR: while fetching guest", e);
+        return res.status(400).json({
+            success: false,
+            message: "Invalid Session!! Please login again",
+        });
+    }
 }
 
 const documentHandler = async (req, res, next) => {
