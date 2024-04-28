@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Code, Doc, Header, Markdown } from '../';
+import { Code, Doc, Header, Loader, Markdown } from '../';
 import { AppContext, UserContext } from '../../context';
 
 function File({ socket }) {
-const { user } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const { file } = useContext(AppContext);
 	const [lastChanged, setLastChanged] = useState(false);
 	const [data, setData] = useState();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -22,7 +23,7 @@ const { user } = useContext(UserContext);
 		setTimeout(() => {
 			socket.emit('request', {
 				id: window.location.pathname.split('/')[1],
-				email: user.email ||"Anonymous",
+				email: user.email || 'Anonymous',
 				type: file?.type?.id,
 			});
 		}, 0);
@@ -30,6 +31,7 @@ const { user } = useContext(UserContext);
 			if (success) {
 				setTimeout(() => {
 					setData(data);
+					setLoading(false);
 				}, 0);
 			} else {
 				console.error(message);
@@ -94,6 +96,7 @@ const { user } = useContext(UserContext);
 		}
 	}, [lastChanged, data]);
 
+	if (loading) return <Loader />;
 	return (
 		<>
 			{file?.type?.value === 'text' ? (
