@@ -35,7 +35,6 @@ const User = pg.define("user", {
 const Document = pg.define("document", {
     name: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false
     },
     type: {
@@ -58,7 +57,10 @@ const Document = pg.define("document", {
     },
     source: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false,
+        validate: {
+            isUrl: true
+        }
     }
 }, {
     indexes: [

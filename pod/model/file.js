@@ -6,9 +6,10 @@ const File = new Schema({
     default: "",
   },
   id: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
+    index: true
   }
 });
 
