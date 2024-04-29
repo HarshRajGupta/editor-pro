@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const path = require("path");
-const cors = require("cors");
 require("dotenv").config();
 const ApiRouter = require("./routes");
 const { serverRestart } = require("./controllers/mail");
@@ -21,13 +20,17 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-environment === "development" && app.use(morgan("dev"));
+environment === "production" && (() => {
+  app.use(express.static("view"));
+  app.use(morgan("tiny"));
+  console.log("DEBUG: Server running in production mode");
+})();
 
-environment === "production" && app.use(morgan("tiny"));
-
-environment === "development" && app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-
-environment === "production" && app.use(express.static("view"));;
+environment === "development" && (() => {
+  const cors = require("cors");
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+  app.use(morgan("dev"));
+})();
 
 app.use("/api", ApiRouter);
 
