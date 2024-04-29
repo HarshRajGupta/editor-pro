@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const { registrationMail } = require("./mail");
 const { pg, pick } = require("../config");
+const response = ['id', 'name', 'email'];
 
 const register = async (req, res) => {
     try {
@@ -40,7 +41,7 @@ const register = async (req, res) => {
                 (err, token) => {
                     if (err) throw err;
                     return res.status(200).json(
-                        { success: true, message: "Registration Successful", user: pick(user, ['id', 'name', 'email']), token: token }
+                        { success: true, message: "Registration Successful", user: pick(user, response), token }
                     );
                 },
             );
@@ -57,7 +58,10 @@ const login = async (req, res) => {
     try {
         const { password } = req.body;
         const email = req.body.email.toLowerCase();
-        const user = await User.findOne({ email });
+        if (!email || !password) return res.status(400).json(
+            { success: false, message: "Please Enter a valid email and password" }
+        );
+        const user = await User.findOne({ where: { email }, attributes: ["password", ...response] });
         if (user) {
             const passOk = bcrypt.compareSync(password, user.password);
             if (passOk) {
@@ -67,7 +71,7 @@ const login = async (req, res) => {
                     (err, token) => {
                         if (err) throw err;
                         return res.status(200).json(
-                            { success: true, message: "Logged in Successfully", user: pick(user, ['id', 'name', 'email']), token: token }
+                            { success: true, message: "Logged in Successfully", user: pick(user, response), token }
                         );
                     },
                 );
@@ -89,7 +93,7 @@ const verify = async (req, res) => {
     try {
         const user = req.user
         res.status(200).json(
-            { success: true, message: `Welcome ${user.name}`, user: pick(user, ['id', 'name', 'email']) }
+            { success: true, message: `Welcome ${user.name}`, user: pick(user, response) }
         );
     } catch (err) {
         console.error("DEBUG: Error while verifying token", err);
@@ -112,7 +116,7 @@ const guest = async (req, res) => {
                     { secure: true, httpOnly: true }
                 );
                 return res.status(200).json(
-                    { success: true, message: "Guest Logged in Successfully", user: pick(user, ['id', 'name', 'email']), token: token }
+                    { success: true, message: "Guest Logged in Successfully", user: pick(user, response), token }
                 );
             },
         );

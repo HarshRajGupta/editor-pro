@@ -10,7 +10,7 @@ function Doc({ text, setText, setLastChanged }) {
   const [showMoodle, setShowMoodle] = useState(false);
   const logOut = () => {
     localStorage.removeItem("token");
-    setUser(null)
+    setUser(null);
   };
   return (
     <>

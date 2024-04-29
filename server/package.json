@@ -43,6 +43,7 @@
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "nodemon": "^3.0.3",
     "prettier": "^3.2.5"
   }

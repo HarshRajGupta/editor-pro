@@ -1,12 +1,12 @@
 const { User, Document, Connection } = require("../models");
 const { invitationMail } = require("./mail");
-const { pg, pick } = require("../config");
+const { pg } = require("../config");
 require("dotenv").config();
 const sources = JSON.parse(process.env.SOURCES || "[]");
 
 const getById = async (req, res) => {
     return res.status(200).json(
-        { success: true, message: "Document fetched", document: pick(req.document, ['id', 'name', 'type', 'ownerId', 'status', 'source']) }
+        { success: true, message: "Document fetched", document: req.document }
     );
 }
 
@@ -27,7 +27,7 @@ const create = async (req, res) => {
                 { transaction: t }
             );
             return res.status(200).json(
-                { success: true, message: "Document created", document: pick(newDocument, ['id', 'name', 'type', 'ownerId', 'status', 'source']) }
+                { success: true, message: "Document created", document: newDocument }
             );
         })
     } catch (e) {
@@ -41,7 +41,9 @@ const create = async (req, res) => {
 const get = async (req, res) => {
     try {
         const user = req.user;
-        const documents = await user.getDocuments({ attributes: ['id', 'name', 'type', 'ownerId', 'status', 'source'] });
+        const documents = await user.getDocuments(
+            { attributes: ['id', 'name', 'type'], joinTableAttributes: [], include: [{ model: User, as: 'owner', attributes: ['id', 'name'] }] }
+        );
         return res.status(200).json(
             { success: true, message: "Documents fetched", documents: documents }
         );
@@ -62,16 +64,32 @@ const invite = async (req, res) => {
         );
         const document = req.document;
         const invitedUser = await User.findOne({ where: { email } })
-        if (invitedUser) await Connection.create(
-            { documentId: document.id, userId: invitedUser.id, email }
-        )
-        else await Connection.create(
-            { documentId: document.id, email: email }
-        );
+        if (invitedUser) {
+            const connection = await Connection.findOne(
+                { where: { documentId: document.id, userId: invitedUser.id } }
+            );
+            if (connection) return res.status(400).json(
+                { success: false, message: "User already invited"}
+            )
+            await Connection.create(
+                { documentId: document.id, userId: invitedUser.id, email }
+            )
+        }
+        else {
+            const connection = await Connection.findOne(
+                { where: { documentId: document.id, email } }
+            );
+            if (connection) return res.status(400).json(
+                { success: false, message: "User already invited"}
+            )
+            await Connection.create(
+                { documentId: document.id, email: email }
+            );
+        }
 
         invitationMail(user.email, email, document.owner.email, document.name, document.id);
         return res.status(200).json(
-            { success: true, message: `${newEmail} Invited` }
+            { success: true, message: `${email} Invited` }
         );
     } catch (e) {
         console.error("ERROR: while adding user", e);

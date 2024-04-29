@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Auth, Config, Home, Loader } from './components';
 import { UserContext } from './context';
 
+process.env.REACT_APP_ENVIRONMENT === 'development' &&
+	(axios.defaults.baseURL = 'http://localhost:4000');
+
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
@@ -14,16 +17,14 @@ function App() {
 		const checkLogin = async () => {
 			const token = localStorage.getItem('token');
 			if (token) {
-				await axios.get('/api/auth', {
+				await axios
+					.get('/api/auth', {
 						headers: {
 							authorization: token,
 						},
 					})
 					.then((res) => {
-						setUser({
-							name: res?.data?.name,
-							email: res?.data?.email,
-						});
+						setUser(res?.data?.user);
 						axios.defaults.headers.common['authorization'] = token;
 						document.title = res.data?.name || 'Editor-Pro';
 						toast.success(res.data.message);

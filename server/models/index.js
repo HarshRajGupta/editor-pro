@@ -130,12 +130,12 @@ const Connection = pg.define("connection", {
     ]
 })
 
-Connection.belongsTo(User, { foreignKey: 'userId', as: 'user', onDelete: 'CASCADE', hooks: true });
-Connection.belongsTo(Document, { foreignKey: 'documentId', as: 'document', onDelete: 'CASCADE', hooks: true });
-Document.belongsTo(User, { foreignKey: 'ownerId', as: 'owner', onDelete: 'CASCADE', hooks: true });
-Document.belongsToMany(User, { through: Connection, as: 'users', onDelete: 'CASCADE', hooks: true });
-User.hasMany(Document, { foreignKey: 'ownerId', as: 'ownedDocuments', onDelete: 'CASCADE', hooks: true });
-User.belongsToMany(Document, { through: Connection, as: 'documents', onDelete: 'CASCADE', hooks: true });
+Connection.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Connection.belongsTo(Document, { foreignKey: 'documentId', as: 'document' });
+Document.belongsTo(User, { foreignKey: 'ownerId', as: 'owner' });
+Document.belongsToMany(User, { through: Connection, as: 'users' });
+User.hasMany(Document, { foreignKey: 'ownerId', as: 'ownedDocuments' });
+User.belongsToMany(Document, { through: Connection, as: 'documents' });
 
 (
     async () => await pg.sync({ alter: true })

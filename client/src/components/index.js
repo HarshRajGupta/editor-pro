@@ -21,5 +21,5 @@ export {
   Loader,
   Doc,
   Moodle,
-  Config
+  Config,
 };

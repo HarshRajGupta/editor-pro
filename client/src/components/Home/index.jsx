@@ -30,22 +30,24 @@ function Files() {
 	];
 	const [fileType, setFileType] = useState(options[0]);
 	const deleteFile = async (id, name) => {
-		await axios.delete(`/api/document/${id}`)
-			.catch((err) => {
-				console.error(err);
-				toast.error('Failed to delete file');
-			})
+		await axios
+			.delete(`/api/document/${id}`)
 			.then(() => {
 				getFiles();
 				toast.success(`${name} deleted successfully`);
+			})
+			.catch((err) => {
+				console.error(err);
+				toast.error('Failed to delete file');
 			});
 	};
 
 	const getFiles = () => {
-		axios.get('/api/document')
+		axios
+			.get('/api/document')
 			.catch((err) => console.error(err))
 			.then((res) => {
-				setFiles(res.data.documents)
+				setFiles(res?.data?.documents || []);
 			});
 	};
 
@@ -76,31 +78,39 @@ function Files() {
 	};
 
 	const Line = ({ file, index }) => {
+		const clickHandler = () => navigate(`/${file.id}`);
+		const deleteHandler = () => deleteFile(file?.id, file?.name);
+		console.log(file.owner.id, user);
 		if (!file) return <br />;
 		return (
-			<div className="grid grid-cols-[7fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] max-[600px]:w-[92vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded md:my-2 mx-auto justify-around relative">
+			<div className="grid grid-cols-[6fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] max-[600px]:w-[92vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
 				<div
 					className="w-full cursor-pointer h-fit text-sm md:text-base max-[600px]:text-[10px]"
-					onClick={() => navigate(`/${file.id}`)}
+					onClick={clickHandler}
 				>
 					<span className="opacity-75 text-xs md:text-sm cursor-default mr-4 md:mr-10 max-[600px]:text-[8px]">
 						{index + 1}.
 					</span>
-					<span className="">{file?.name}</span>
+					<span className="text-s">{file?.name}</span>
 				</div>
-				<div className="opacity-60 m-auto cursor-default text-xs md:text-sm max-[600px]:hidden">
+				<div
+					className="opacity-60 m-auto cursor-default text-xs md:text-sm max-[600px]:hidden"
+					onClick={clickHandler}
+				>
 					{file?.type?.label}
 				</div>
-				{/* <div className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[8px]">
-					{file?.owner === user.id ? '' : file?.owner}
-				</div> */}
-				{file?.owner === user.id && (
+				{file?.owner.id !== user.id ? (
+					<div
+						className="opacity-60 m-auto capitalize cursor-default text-xs md:text-sm max-[600px]:text-[8px]"
+						onClick={clickHandler}
+					>
+						{file?.owner.name}
+					</div>
+				) : (
 					<div className="absolute right-5">
 						<img
 							src={DeleteIcon}
-							onClick={() =>
-								deleteFile(file?.id, file?.name)
-							}
+							onClick={deleteHandler}
 							alt={`delete`}
 							className="w-5 h-5 cursor-pointer top-[50%] bottom-[50%] transform translate-y-[50%] opacity-60 scale-90 hover:scale-100 transition-all duration-200 ease-in-out hover:opacity-80 max-[600px]:w-4 max-[600px]:h-4"
 						/>

@@ -14,9 +14,12 @@ function Code({ code, setCode, defaultLanguage, setLastChanged }) {
   const handleLanguageChange = async (value) => {
     setLanguage(value);
     try {
-      await axios.put(`/api/document/${window.location.pathname.split("/")[1]}/type`, {
-        type: value,
-      });
+      await axios.put(
+        `/api/document/${window.location.pathname.split("/")[1]}/type`,
+        {
+          type: value,
+        },
+      );
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message);

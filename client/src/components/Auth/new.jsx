@@ -1,281 +1,265 @@
-import axios from 'axios';
-import { useContext, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import Styled from 'styled-components';
-import newAuth from '../../assets/images/newAuth.svg';
-import { UserContext } from '../../context';
+import axios from "axios";
+import { useContext, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import Styled from "styled-components";
+import newAuth from "../../assets/images/newAuth.svg";
+import { UserContext } from "../../context";
 
 function Auth() {
-	const { setUser } = useContext(UserContext);
-	const [page, setPage] = useState('login');
-	const emailRef = useRef();
-	const passwordRef = useRef();
-	const nameRef = useRef();
-	const rememberMeRef = useRef();
-	const termsRef = useRef();
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState({});
-	const validate = () => {
-		if (!emailRef.current.value || emailRef.current.value === '') {
-			setError((prev) => ({ ...prev, email: 'Please enter your email' }));
-			return false;
-		} else if (
-			!/^[^\s@]+@[^\s@]+\.+[^\s@]{2,}$/i.test(emailRef.current.value)
-		) {
-			setError((prev) => ({
-				...prev,
-				email: 'Please enter a valid email',
-			}));
-			return false;
-		} else {
-			setError((prev) => ({ ...prev, email: '' }));
-		}
-		if (!passwordRef.current.value || passwordRef.current.value === '') {
-			setError((prev) => ({
-				...prev,
-				password: 'Please enter your password',
-			}));
-			return false;
-		} else if (passwordRef.current.value.length < 8) {
-			setError((prev) => ({
-				...prev,
-				password: 'Password must be at least 8 characters',
-			}));
-			return false;
-		} else {
-			setError((prev) => ({ ...prev, password: '' }));
-		}
-		if (
-			page === 'register' &&
-			(!nameRef.current.value || nameRef.current.value === '')
-		) {
-			setError((prev) => ({
-				...prev,
-				name: 'Please enter your name',
-			}));
-			return false;
-		} else {
-			setError((prev) => ({ ...prev, name: '' }));
-		}
-		if (page === 'register' && !termsRef.current.checked) {
-			setError((prev) => ({
-				...prev,
-				terms: 'Required',
-			}));
-			return false;
-		} else {
-			setError((prev) => ({ ...prev, terms: '' }));
-		}
-		return true;
-	};
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-		if (!validate()) {
-			return setLoading(false);
-		}
-		const user = {
-			email: emailRef.current.value,
-			password: passwordRef.current.value,
-		};
-		if (page === 'register') {
-			user.name = nameRef.current.value;
-		}
-		try {
-			await axios.post(`/api/auth/${page}`, user)
-				.then((res) => {
-					setLoading(false);
-					if (rememberMeRef.current.checked)
-						localStorage.setItem('token', res.data.token);
-					axios.defaults.headers.common['authorization'] = res.data.token;
-					toast.success(res.data.message);
-					document.title = res.data?.user?.name || 'Editor-Pro';
-					return setUser(res.data?.user);
-				})
-				.catch((err) => {
-					setLoading(false);
-					if (!err.response) {
-						toast.error('Something went wrong!');
-					} else {
-						toast.error(err.response?.data?.message);
-					}
-					console.error(err);
-				});
-		} catch (err) {
-			setLoading(false);
-			if (!err.response) {
-				toast.error('Something went wrong!');
-			} else {
-				toast.error(err.response?.data?.message);
-			}
-			return console.error(err);
-		}
-	};
-	const loginAsGuest = async () => {
-		setLoading(true);
-		toast.info('Logging in as Guest');
-		try {
-			await axios.get(`/api/auth/guest`)
-				.then((res) => {
-					document.title = 'Editor-Pro';
-					toast.warning(
-						'Please note that your data will be lost after you logout!',
-					);
-					axios.defaults.headers.common['authorization'] = res.data.token;
-					setUser(res.data?.user);
-				})
-				.catch((err) => {
-					console.error(err);
-					toast.error('Something went wrong!');
-				});
-		} catch (err) {
-			toast.error('Something went wrong!');
-		} finally {
-			setLoading(false);
-		}
-	};
-	return (
-		<Container>
-			<LeftContainer>
-				<Image
-					src={newAuth}
-					alt="Image"
-				/>
-			</LeftContainer>
-			<Right>
-				<RightContainer
-					action={''}
-					onSubmit={handleSubmit}
-				>
-					<H1>{page}</H1>
-					{page === 'register' ? (
-						<div className="grid">
-							<Label htmlFor="name">Name</Label>
-							<Input
-								required
-								type="text"
-								name="name"
-								placeholder="Please Enter you Name"
-								disabled={loading}
-								ref={nameRef}
-								className={
-									loading ? 'opacity-50 cursor-wait' : ''
-								}
-								autoComplete="Jhon Doe"
-							/>
-							{error.name && (
-								<div className="error">{error.name}</div>
-							)}
-						</div>
-					) : (
-						<></>
-					)}
-					<div className="grid">
-						<Label htmlFor="email">Email ID</Label>
-						<Input
-							required
-							type="email"
-							name="email"
-							placeholder="Enter Email ID"
-							ref={emailRef}
-							disabled={loading}
-							className={loading ? 'opacity-50 cursor-wait' : ''}
-							autoComplete="example@mail.com"
-						/>
-						{error.email && (
-							<div className="error">{error.email}</div>
-						)}
-					</div>
-					<div className="grid">
-						<Label htmlFor="password">Password</Label>
-						<Input
-							required
-							placeholder="Password"
-							type="password"
-							name="password"
-							disabled={loading}
-							ref={passwordRef}
-							className={loading ? 'opacity-50 cursor-wait' : ''}
-							autoComplete="password"
-						/>
-						{error.password && (
-							<div className="error">{error.password}</div>
-						)}
-					</div>
-					<Box className={loading ? 'opacity-75 cursor-wait' : ''}>
-						<CheckBox
-							type="checkbox"
-							name="rememberMe"
-							disabled={loading}
-							ref={rememberMeRef}
-						/>
-						<Suffix htmlFor="rememberMe">Remember me</Suffix>
-					</Box>
-					{page === 'register' ? (
-						<Box
-							className={loading ? 'opacity-75 cursor-wait' : ''}
-						>
-							<CheckBox
-								type="checkbox"
-								name="terms"
-								disabled={loading}
-								ref={termsRef}
-							/>
-							<Suffix htmlFor="terms">
-								Agree to&nbsp;
-								<a
-									target="__blank"
-									href="https://docs.google.com/document/d/1C2TUPEbnozRSuMhp4Xur7H4Vy97LOaNOeZDxSKYmLG0/edit?usp=sharing"
-								>
-									Terms and Conditions
-								</a>
-								&nbsp;
-							</Suffix>
-							{error.terms && (
-								<div className="error">{error.terms}</div>
-							)}
-						</Box>
-					) : (
-						<></>
-					)}
-					<Button
-						type="submit"
-						disabled={loading}
-						onClick={handleSubmit}
-						className={loading ? 'opacity-75 cursor-wait' : ''}
-					>
-						{page}
-					</Button>
-					{page === 'login' ? (
-						<Link>
-							Don`t have an account? &nbsp;{' '}
-							<span
-								onClick={() => {
-									setPage('register');
-								}}
-							>
-								Register Here
-							</span>
-						</Link>
-					) : (
-						<Link>
-							Already have an account? &nbsp;{' '}
-							<span
-								onClick={() => {
-									setPage('login');
-								}}
-							>
-								Login Here
-							</span>
-						</Link>
-					)}
-					<Link>
-						<span onClick={loginAsGuest}>Login as Guest</span>
-					</Link>
-				</RightContainer>
-			</Right>
-		</Container>
-	);
+  const { setUser } = useContext(UserContext);
+  const [page, setPage] = useState("login");
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const nameRef = useRef();
+  const rememberMeRef = useRef();
+  const termsRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
+  const validate = () => {
+    if (!emailRef.current.value || emailRef.current.value === "") {
+      setError((prev) => ({ ...prev, email: "Please enter your email" }));
+      return false;
+    } else if (
+      !/^[^\s@]+@[^\s@]+\.+[^\s@]{2,}$/i.test(emailRef.current.value)
+    ) {
+      setError((prev) => ({
+        ...prev,
+        email: "Please enter a valid email",
+      }));
+      return false;
+    } else {
+      setError((prev) => ({ ...prev, email: "" }));
+    }
+    if (!passwordRef.current.value || passwordRef.current.value === "") {
+      setError((prev) => ({
+        ...prev,
+        password: "Please enter your password",
+      }));
+      return false;
+    } else if (passwordRef.current.value.length < 8) {
+      setError((prev) => ({
+        ...prev,
+        password: "Password must be at least 8 characters",
+      }));
+      return false;
+    } else {
+      setError((prev) => ({ ...prev, password: "" }));
+    }
+    if (
+      page === "register" &&
+      (!nameRef.current.value || nameRef.current.value === "")
+    ) {
+      setError((prev) => ({
+        ...prev,
+        name: "Please enter your name",
+      }));
+      return false;
+    } else {
+      setError((prev) => ({ ...prev, name: "" }));
+    }
+    if (page === "register" && !termsRef.current.checked) {
+      setError((prev) => ({
+        ...prev,
+        terms: "Required",
+      }));
+      return false;
+    } else {
+      setError((prev) => ({ ...prev, terms: "" }));
+    }
+    return true;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!validate()) {
+      return setLoading(false);
+    }
+    const user = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+    if (page === "register") {
+      user.name = nameRef.current.value;
+    }
+    try {
+      await axios
+        .post(`/api/auth/${page}`, user)
+        .then((res) => {
+          setLoading(false);
+          if (rememberMeRef.current.checked)
+            localStorage.setItem("token", res.data.token);
+          axios.defaults.headers.common["authorization"] = res.data.token;
+          toast.success(res.data.message);
+          document.title = res.data?.user?.name || "Editor-Pro";
+          return setUser(res.data?.user);
+        })
+        .catch((err) => {
+          setLoading(false);
+          if (!err.response) {
+            toast.error("Something went wrong!");
+          } else {
+            toast.error(err.response?.data?.message);
+          }
+          console.error(err);
+        });
+    } catch (err) {
+      setLoading(false);
+      if (!err.response) {
+        toast.error("Something went wrong!");
+      } else {
+        toast.error(err.response?.data?.message);
+      }
+      return console.error(err);
+    }
+  };
+  const loginAsGuest = async () => {
+    setLoading(true);
+    toast.info("Logging in as Guest");
+    try {
+      await axios
+        .get(`/api/auth/guest`)
+        .then((res) => {
+          document.title = "Editor-Pro";
+          toast.warning(
+            "Please note that your data will be lost after you logout!",
+          );
+          axios.defaults.headers.common["authorization"] = res.data.token;
+          setUser(res.data?.user);
+        })
+        .catch((err) => {
+          console.error(err);
+          toast.error("Something went wrong!");
+        });
+    } catch (err) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <Container>
+      <LeftContainer>
+        <Image src={newAuth} alt="Image" />
+      </LeftContainer>
+      <Right>
+        <RightContainer action={""} onSubmit={handleSubmit}>
+          <H1>{page}</H1>
+          {page === "register" ? (
+            <div className="grid">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                required
+                type="text"
+                name="name"
+                placeholder="Please Enter you Name"
+                disabled={loading}
+                ref={nameRef}
+                className={loading ? "opacity-50 cursor-wait" : ""}
+                autoComplete="Jhon Doe"
+              />
+              {error.name && <div className="error">{error.name}</div>}
+            </div>
+          ) : (
+            <></>
+          )}
+          <div className="grid">
+            <Label htmlFor="email">Email ID</Label>
+            <Input
+              required
+              type="email"
+              name="email"
+              placeholder="Enter Email ID"
+              ref={emailRef}
+              disabled={loading}
+              className={loading ? "opacity-50 cursor-wait" : ""}
+              autoComplete="example@mail.com"
+            />
+            {error.email && <div className="error">{error.email}</div>}
+          </div>
+          <div className="grid">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              required
+              placeholder="Password"
+              type="password"
+              name="password"
+              disabled={loading}
+              ref={passwordRef}
+              className={loading ? "opacity-50 cursor-wait" : ""}
+              autoComplete="password"
+            />
+            {error.password && <div className="error">{error.password}</div>}
+          </div>
+          <Box className={loading ? "opacity-75 cursor-wait" : ""}>
+            <CheckBox
+              type="checkbox"
+              name="rememberMe"
+              disabled={loading}
+              ref={rememberMeRef}
+            />
+            <Suffix htmlFor="rememberMe">Remember me</Suffix>
+          </Box>
+          {page === "register" ? (
+            <Box className={loading ? "opacity-75 cursor-wait" : ""}>
+              <CheckBox
+                type="checkbox"
+                name="terms"
+                disabled={loading}
+                ref={termsRef}
+              />
+              <Suffix htmlFor="terms">
+                Agree to&nbsp;
+                <a
+                  target="__blank"
+                  href="https://docs.google.com/document/d/1C2TUPEbnozRSuMhp4Xur7H4Vy97LOaNOeZDxSKYmLG0/edit?usp=sharing"
+                >
+                  Terms and Conditions
+                </a>
+                &nbsp;
+              </Suffix>
+              {error.terms && <div className="error">{error.terms}</div>}
+            </Box>
+          ) : (
+            <></>
+          )}
+          <Button
+            type="submit"
+            disabled={loading}
+            onClick={handleSubmit}
+            className={loading ? "opacity-75 cursor-wait" : ""}
+          >
+            {page}
+          </Button>
+          {page === "login" ? (
+            <Link>
+              Don`t have an account? &nbsp;{" "}
+              <span
+                onClick={() => {
+                  setPage("register");
+                }}
+              >
+                Register Here
+              </span>
+            </Link>
+          ) : (
+            <Link>
+              Already have an account? &nbsp;{" "}
+              <span
+                onClick={() => {
+                  setPage("login");
+                }}
+              >
+                Login Here
+              </span>
+            </Link>
+          )}
+          <Link>
+            <span onClick={loginAsGuest}>Login as Guest</span>
+          </Link>
+        </RightContainer>
+      </Right>
+    </Container>
+  );
 }
 
 const Container = Styled.main`
