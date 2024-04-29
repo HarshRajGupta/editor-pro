@@ -33,7 +33,7 @@ app.use("/api", ApiRouter);
 
 app.get("*", (_, res) => {
   if (environment === "development")
-    return res.redirect(client);
+    return res.redirect("http://localhost:3000");
   else if (environment === "production")
     return res.sendFile(path.resolve(__dirname, "view", "index.html"));
   else
@@ -43,7 +43,7 @@ app.get("*", (_, res) => {
 (() => {
   try {
     app.listen(port, () => {
-      console.log(`DEBUG: Server listening on http://localhost:${port}`);
+      console.log(`DEBUG: Server listening on http://localhost:${port} in ${environment} mode`);
       serverRestart();
     });
   } catch (error) {
