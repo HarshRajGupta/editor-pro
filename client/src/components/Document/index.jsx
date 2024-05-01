@@ -6,7 +6,7 @@ import { AppContext, UserContext } from "../../context";
 const latency = (interval) => {
   if (interval.length === 0) return { };
   interval.sort();
-  average = 0;
+  let average = 0;
   for (let i = 0; i < interval.length; i++) {
     average += interval[i];
   }
