@@ -1,10 +1,11 @@
 const crypto = require('crypto');
 require("dotenv").config();
 const File = require("../model/file");
-const defaultData = require("../defaultData.json");
+const defaultData = require("../defaultData.json").map(({ id, code }) => ({ id, data: encrypt(code) }));
 const cypherKey = crypto.scryptSync(process.env.CYPHER_KEY, 'salt', 32);
 const iv = Buffer.alloc(16, 0);
 const hashMap = new Map();
+
 
 const encrypt = (data) => {
     const cipher = crypto.createCipheriv('aes-256-cbc', cypherKey, iv);
@@ -20,21 +21,21 @@ const decrypt = (data) => {
     return decrypted;
 }
 
-const get = async ({ id, type }) => {
+const findOrCreate = async ({ id, type }) => {
     try {
         if (!id)
             return await Promise.reject("invalid file");
-        const file = await File.findOne({ documentId: id });
-        if (!file)
-            return await File.create({
-                documentId: id,
-                data: encrypt(defaultData.find(defaultData => defaultData.id === type).code)
-            })
-        return file;
+        return await File.findOne({ documentId: id }, async (_, file) => {
+            if (file)
+                return file;
+            return await File.create(
+                { documentId: id, data: defaultData.find(def => def.id === type).code }
+            );
+        });
     } catch (e) {
         return await Promise.reject(e);
     }
-};
+}
 
 const save = async () => {
     console.log(`DEBUG: Saving Files`);
@@ -65,7 +66,7 @@ const webSockets = async (socket) => {
     socket.on("request", async (params) => {
         console.log(`WS: request ${params.id}`);
         try {
-            const file = await get(params);
+            const file = await findOrCreate(params);
             await socket.to(params.id).emit("joined", params.email);
             if (hashMap.has(params.id)) file.data = hashMap.get(params.id).data;
             socket.emit("response", {

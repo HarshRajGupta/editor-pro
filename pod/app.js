@@ -13,7 +13,7 @@ const io = new Server(server, {
       origin: client,
     }
 });
-const interval = 10 * 60 * 1000;
+const interval = +process.env.INTERVAL || 10 * 60 * 1000;
 
 app.get('/', (_, res) => res.redirect(client));
 
