@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Auth, Config, Home, Loader } from './components';
 import { UserContext } from './context';
 
-process.env.REACT_APP_ENVIRONMENT === 'development' &&
+process.env.REACT_APP_ENV === 'development' &&
 	(axios.defaults.baseURL = 'http://localhost:4000');
 
 function App() {
