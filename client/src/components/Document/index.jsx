@@ -37,7 +37,7 @@ function File({ socket }) {
         id: window.location.pathname.split("/")[1],
         email: user.email || "Anonymous",
         type: file?.type?.id,
-        timestamp: performance.now(),
+        timestamp: Date.now(),
       });
     }, 0);
     socket.on("response", ({ success, data, message, timestamp }) => {
@@ -45,7 +45,7 @@ function File({ socket }) {
         setTimeout(() => {
           setData(data);
           setLoading(false);
-          console.info(performance.now() - timestamp);
+          console.info(Date.now() - timestamp);
         }, 0);
       } else {
         console.error(message);
@@ -56,7 +56,7 @@ function File({ socket }) {
       setTimeout(() => {
         setLastChanged(false);
         setData(data);
-        interval.push(performance.now() - timestamp);
+        interval.push(Date.now() - timestamp);
         console.info("Received Changes!");
         console.debug(stats(interval));
       }, 0);
@@ -105,7 +105,7 @@ function File({ socket }) {
         setLastChanged(false);
         socket.emit("client_to_server", {
           data: data,
-          timestamp: performance.now(),
+          timestamp: Date.now(),
         });
         console.info("Emitting Changes...!");
       }, 0);

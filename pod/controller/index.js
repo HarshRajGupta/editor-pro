@@ -75,7 +75,7 @@ const webSockets = async (socket) => {
                 success: true,
                 message: "Document fetched",
                 data: file.data ? decrypt(file.data) : "",
-                timestamp: params.timestamp || performance.now()
+                timestamp: params.timestamp || Date.now()
             });
             await socket.join(params.id);
             await socket.on("client_to_server", async ({ data, timestamp }) => {
