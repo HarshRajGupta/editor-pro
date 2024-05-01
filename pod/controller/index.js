@@ -30,7 +30,7 @@ const findOrCreate = async ({ id, type }) => {
                 if (file)
                     return file;
                 return await File.create(
-                    { documentId: id, data: defaultData.find(def => def.id === type).code }
+                    { documentId: id, data: defaultData.find(def => def.id === type).data }
                 )
             }
         )
