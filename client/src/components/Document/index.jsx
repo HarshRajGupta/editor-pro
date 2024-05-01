@@ -110,7 +110,7 @@ function File({ socket }) {
         console.info("Emitting Changes...!");
       }, 0);
     }
-  }, [lastChanged, data]);
+  }, [lastChanged]);
 
   if (loading) return <Loader />;
   return (
