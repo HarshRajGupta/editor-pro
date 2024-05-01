@@ -1,11 +1,9 @@
 const crypto = require('crypto');
 require("dotenv").config();
 const File = require("../model/file");
-const defaultData = require("../defaultData.json").map(({ id, code }) => ({ id, data: encrypt(code) }));
 const cypherKey = crypto.scryptSync(process.env.CYPHER_KEY, 'salt', 32);
 const iv = Buffer.alloc(16, 0);
 const hashMap = new Map();
-
 
 const encrypt = (data) => {
     const cipher = crypto.createCipheriv('aes-256-cbc', cypherKey, iv);
@@ -20,6 +18,8 @@ const decrypt = (data) => {
     decrypted += decipher.final('utf8');
     return decrypted;
 }
+
+const defaultData = require("../defaultData.json").map(({ id, code }) => ({ id, data: encrypt(code) }));
 
 const findOrCreate = async ({ id, type }) => {
     try {
