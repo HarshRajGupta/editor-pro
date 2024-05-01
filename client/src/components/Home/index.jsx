@@ -80,7 +80,6 @@ function Files() {
 	const Line = ({ file, index }) => {
 		const clickHandler = () => navigate(`/${file.id}`);
 		const deleteHandler = () => deleteFile(file?.id, file?.name);
-		console.log(file.owner.id, user);
 		if (!file) return <br />;
 		return (
 			<div className="grid grid-cols-[6fr_4fr_4fr] md:grid-cols-[11fr_4fr_4fr] w-[94vw] max-[600px]:w-[92vw] h-max px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded my-2 mx-auto justify-around relative">
