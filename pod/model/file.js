@@ -5,7 +5,7 @@ const File = new Schema({
     type: Object,
     default: "",
   },
-  id: {
+  documentId: {
     type: Number,
     required: true,
     unique: true,

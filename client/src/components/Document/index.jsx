@@ -3,12 +3,29 @@ import { toast } from "react-toastify";
 import { Code, Doc, Header, Loader, Markdown } from "../";
 import { AppContext, UserContext } from "../../context";
 
+const latency = (interval) => {
+  if (interval.length === 0) return { };
+  interval.sort();
+  average = 0;
+  for (let i = 0; i < interval.length; i++) {
+    average += interval[i];
+  }
+  average = average / interval.length;
+  return {
+    average,
+    min: interval[0],
+    max: interval[interval.length - 1],
+    median: interval[Math.floor(interval.length / 2)],
+  }
+}
+
 function File({ socket }) {
   const { user } = useContext(UserContext);
   const { file } = useContext(AppContext);
   const [lastChanged, setLastChanged] = useState(false);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  let interval = []
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,11 +55,12 @@ function File({ socket }) {
         toast.error(message);
       }
     });
-    socket.on("server_to_client", ({ data }) => {
+    socket.on("server_to_client", ({ data, timestamp }) => {
       setTimeout(() => {
         setLastChanged(false);
         setData(data);
-        console.info("Received Changes!");
+        interval.push(Date.now() - timestamp);
+        console.info("Received Changes!", latency(interval));
       }, 0);
     });
     socket.on("joined", (user) => {

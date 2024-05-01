@@ -24,10 +24,10 @@ const get = async ({ id, type }) => {
     try {
         if (!id)
             return await Promise.reject("invalid file");
-        const file = await File.findOne({ id });
+        const file = await File.findOne({ documentId: id });
         if (!file)
             return await File.create({
-                id: id,
+                documentId: id,
                 data: encrypt(defaultData.find(defaultData => defaultData.id === type).code)
             })
         return file;
@@ -39,7 +39,7 @@ const get = async ({ id, type }) => {
 const save = async () => {
     console.log(`DEBUG: Saving Files`);
     for (const [id, value] of hashMap) {
-        await File.findOne({ id })
+        await File.findOne({ documentId: id })
             .catch((e) => {
                 console.error(`ERROR: while fetching ${id} File `, e);
             })
@@ -86,7 +86,7 @@ const webSockets = async (socket) => {
                             data: encrypt(data),
                             timestamp: timestamp,
                         });
-                        socket.to(params.id).emit("server_to_client", { data });
+                        socket.to(params.id).emit("server_to_client", { data, timestamp });
                         console.log(`WS: Changes from ${params.email} saved`);
                     }
                 } catch (error) {
