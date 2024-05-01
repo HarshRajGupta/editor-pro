@@ -25,13 +25,15 @@ const findOrCreate = async ({ id, type }) => {
     try {
         if (!id)
             return await Promise.reject("invalid file");
-        return await File.findOne({ documentId: id }, async (_, file) => {
-            if (file)
-                return file;
-            return await File.create(
-                { documentId: id, data: defaultData.find(def => def.id === type).code }
-            );
-        });
+        return await File.findOne({ documentId: id }).then(
+            async (file) => {
+                if (file)
+                    return file;
+                return await File.create(
+                    { documentId: id, data: defaultData.find(def => def.id === type).code }
+                )
+            }
+        )
     } catch (e) {
         return await Promise.reject(e);
     }
