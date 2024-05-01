@@ -11,6 +11,8 @@ const File = new Schema({
     unique: true,
     index: true
   }
+}, {
+  timestamps: true
 });
 
 module.exports = model("file", File);

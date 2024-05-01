@@ -3,14 +3,10 @@ import { toast } from "react-toastify";
 import { Code, Doc, Header, Loader, Markdown } from "../";
 import { AppContext, UserContext } from "../../context";
 
-const latency = (interval) => {
+const stats = (interval) => {
   if (interval.length === 0) return { };
   interval.sort((a, b) => b - a);
-  let average = 0;
-  for (let i = 0; i < interval.length; i++) {
-    average += interval[i];
-  }
-  average = average / interval.length;
+  const average = interval.reduce((a, b) => a + b, 0) / interval.length
   return {
     average,
     max: interval[0],
@@ -41,13 +37,15 @@ function File({ socket }) {
         id: window.location.pathname.split("/")[1],
         email: user.email || "Anonymous",
         type: file?.type?.id,
+        timestamp: performance.now(),
       });
     }, 0);
-    socket.on("response", ({ success, data, message }) => {
+    socket.on("response", ({ success, data, message, timestamp }) => {
       if (success) {
         setTimeout(() => {
           setData(data);
           setLoading(false);
+          console.info(performance.now() - timestamp);
         }, 0);
       } else {
         console.error(message);
@@ -59,7 +57,8 @@ function File({ socket }) {
         setLastChanged(false);
         setData(data);
         interval.push(performance.now() - timestamp);
-        console.info("Received Changes!", latency(interval));
+        console.info("Received Changes!");
+        console.debug(stats(interval));
       }, 0);
     });
     socket.on("joined", (user) => {
