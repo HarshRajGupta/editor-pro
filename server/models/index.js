@@ -57,10 +57,7 @@ const Document = pg.define("document", {
     },
     source: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            isUrl: true
-        }
+        allowNull: false
     }
 }, {
     indexes: [

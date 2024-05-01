@@ -5,13 +5,14 @@ import { AppContext, UserContext } from "../../context";
 
 const latency = (interval) => {
   if (interval.length === 0) return { };
-  interval.sort();
+  interval.sort((a, b) => a - b);
   let average = 0;
   for (let i = 0; i < interval.length; i++) {
     average += interval[i];
   }
   average = average / interval.length;
   return {
+    interval,
     average,
     min: interval[0],
     max: interval[interval.length - 1],
