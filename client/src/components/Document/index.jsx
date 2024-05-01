@@ -5,17 +5,15 @@ import { AppContext, UserContext } from "../../context";
 
 const latency = (interval) => {
   if (interval.length === 0) return { };
-  interval.sort((a, b) => a - b);
+  interval.sort((a, b) => b - a);
   let average = 0;
   for (let i = 0; i < interval.length; i++) {
     average += interval[i];
   }
   average = average / interval.length;
   return {
-    interval,
     average,
-    min: interval[0],
-    max: interval[interval.length - 1],
+    max: interval[0],
     median: interval[Math.floor(interval.length / 2)],
   }
 }
@@ -60,7 +58,7 @@ function File({ socket }) {
       setTimeout(() => {
         setLastChanged(false);
         setData(data);
-        interval.push(Date.now() - timestamp);
+        interval.push(performance.now() - timestamp);
         console.info("Received Changes!", latency(interval));
       }, 0);
     });
@@ -108,7 +106,7 @@ function File({ socket }) {
         setLastChanged(false);
         socket.emit("client_to_server", {
           data: data,
-          timestamp: Date.now(),
+          timestamp: performance.now(),
         });
         console.info("Emitting Changes...!");
       }, 0);

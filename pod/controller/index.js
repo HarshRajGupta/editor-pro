@@ -63,7 +63,6 @@ const save = async () => {
 const webSockets = async (socket) => {
     console.log(`WS: User connected to ${socket.id}`);
     socket.on("request", async (params) => {
-        console.log(params);
         console.log(`WS: request ${params.id}`);
         try {
             const file = await get(params);
