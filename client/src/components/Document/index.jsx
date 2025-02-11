@@ -16,6 +16,7 @@ const stats = (interval) => {
 
 const debounce = (func, delay) => {
 	let timeout = null;
+  console.info("Debouncing...")
 	return () => {
 		if (timeout) clearTimeout(timeout);
 		timeout = setTimeout(() => func, delay);
@@ -116,7 +117,7 @@ function File({ socket }) {
           timestamp: Date.now(),
         });
         console.info("Emitting Changes...!");
-      }, 500);
+      }, 500)();
     }
   }, [lastChanged]);
 
