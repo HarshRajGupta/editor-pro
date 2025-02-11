@@ -14,6 +14,16 @@ const stats = (interval) => {
   }
 }
 
+function debounce(func, delay) {
+	let timeout = null;
+	return () => {
+		if (timeout) clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			func();
+		}, delay);
+	};
+}
+
 function File({ socket }) {
   const { user } = useContext(UserContext);
   const { file } = useContext(AppContext);
@@ -101,14 +111,14 @@ function File({ socket }) {
 
   useEffect(() => {
     if (lastChanged) {
-      setTimeout(() => {
+      debounce(() => {
         setLastChanged(false);
         socket.emit("client_to_server", {
           data: data,
           timestamp: Date.now(),
         });
         console.info("Emitting Changes...!");
-      }, 0);
+      }, 500);
     }
   }, [lastChanged]);
 
