@@ -47,7 +47,7 @@ app.get("*", (_, res) => {
   try {
     app.listen(port, () => {
       console.log(`DEBUG: Server listening on http://localhost:${port} in ${environment} mode`);
-      serverRestart();
+      // serverRestart();
     });
   } catch (error) {
     console.error("ERROR: while starting server", error);
