@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const path = require("path");
 require("dotenv").config();
 const ApiRouter = require("./routes");
-const { serverRestart } = require("./controllers/mail");
+const { sendMailOnRestart } = require("./controllers/mail");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -47,7 +47,7 @@ app.get("*", (_, res) => {
   try {
     app.listen(port, () => {
       console.log(`DEBUG: Server listening on http://localhost:${port} in ${environment} mode`);
-      // serverRestart();
+      // sendMailOnRestart();
     });
   } catch (error) {
     console.error("ERROR: while starting server", error);
